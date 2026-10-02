@@ -392,6 +392,7 @@ let currentQuestion=null,currentChoices=[],quizLocked=false;
 let questionDeck=[],hardQuestionDeck=[],lastMainQuestionId=null,lastHardQuestionId=null;
 let activePipe=null,currentQuizIsGold=false,currentQuizWasDuringJackpot=false;
 let totalPassed=0,totalGenerated=0,normalGenerated=0;
+let goldProgressPassed=0,goldCooldownPipes=0,jackpotGoldSpawned=false;
 
 // Jackpot power-up state
 let jackpotActive=false,megaJackpotActive=false,jackpotStartMs=0,jackpotGraceUntil=0;
@@ -560,14 +561,21 @@ updateAudioButtons();
 // GOLD PIPE LOGIC
 // ------------------------------------------------------------
 function goldChance(){
-  // 1% initially, +1 percentage point every 7 passed pipes, capped at 7%.
-  return Math.min(.01+Math.floor(totalPassed/7)*.01,.07);
+  // Normal gold chance advances only from pipes passed during regular gameplay.
+  // Jackpot pipes and jackpot coin score no longer accelerate the next jackpot.
+  return Math.min(.01+Math.floor(goldProgressPassed/7)*.01,.07);
 }
 function shouldBeGold(inJackpot=false){
-  // During a jackpot, slightly boost the chance of another gold pipe so
-  // a MEGA JACKPOT is rare but realistically achievable. Keep the same 7% cap.
-  const chance=inJackpot?Math.min(goldChance()*2,.07):goldChance();
-  return Math.random()<chance;
+  if(inJackpot){
+    // During a normal jackpot there is a fixed 2% chance per newly generated pipe
+    // for ONE gold pipe. Once it appears, or once MEGA begins, no more can spawn.
+    if(megaJackpotActive||jackpotGoldSpawned)return false;
+    if(Math.random()<.02){jackpotGoldSpawned=true;return true;}
+    return false;
+  }
+  // After any jackpot, force five regular pipe generations with no gold pipe.
+  if(goldCooldownPipes>0){goldCooldownPipes--;return false;}
+  return Math.random()<goldChance();
 }
 function shuffledCopy(pool){
   const a=[...pool];
@@ -781,7 +789,7 @@ function resetGame(){
   jackpotDurationMs=10000;jackpotCoinSchedule=[];jackpotQuizPauseStarted=0;
   jackpotCountdownPulse=0;jackpotImpactFlash=0;
   pipes=[];state="ready";activePipe=null;currentQuestion=null;currentQuizIsGold=false;currentQuizWasDuringJackpot=false;
-  totalPassed=0;totalGenerated=0;normalGenerated=0;questionDeck=[];hardQuestionDeck=[];lastMainQuestionId=null;lastHardQuestionId=null;closeQuiz();stopMusic();musicStep=0;musicCurrentMs=235;
+  totalPassed=0;totalGenerated=0;normalGenerated=0;goldProgressPassed=0;goldCooldownPipes=0;jackpotGoldSpawned=false;questionDeck=[];hardQuestionDeck=[];lastMainQuestionId=null;lastHardQuestionId=null;closeQuiz();stopMusic();musicStep=0;musicCurrentMs=235;
   if(audioCtx&&musicBus)musicBus.gain.value=.72;celebration.classList.remove("play");celebration.style.display="none";
   const firstX=680;
   for(let i=0;i<4;i++)addPipe(firstX+i*pipeSpacing,i===0?null:pipes[i-1]);
@@ -803,7 +811,7 @@ function addPipe(x,prev=null){
     isVerb=normalGenerated%3===0;
   }
   const question=gold?chooseQuestion(true):(isVerb?chooseQuestion(false):null);
-  const pipe={x,topH,passed:false,gold,isVerb,question,announced:false,lastSparkle:0};
+  const pipe={x,topH,passed:false,gold,isVerb,question,announced:false,lastSparkle:0,goldFromJackpot:Boolean(gold&&jackpotActive)};
   pipes.push(pipe);
   maybeSpawnHeart(prev,pipe);
 }
@@ -952,7 +960,7 @@ function openQuiz(pipe){
   verbHintEl.textContent=`Infinitivo: ${currentQuestion.verb}`;
   feedbackEl.textContent="";attemptsEl.textContent="Una oportunidad";
   quizFooter.textContent=currentQuizWasDuringJackpot
-    ?"MEGA JACKPOT: acierta para añadir tiempo y muchísimas monedas."
+    ?"MEGA JACKPOT: acierta para añadir 7 segundos y más monedas."
     :(pipe.gold?"JACKPOT: elige la forma correcta. Haz clic o usa 1, 2, 3.":"Elige la forma correcta. Haz clic o usa las teclas 1, 2, 3.");
   renderChoices();overlay.style.display="flex";
   duckMusic();
@@ -1060,9 +1068,9 @@ function scheduleCoinWaves(totalCoins,startElapsed=0,windowMs=6000){
 }
 function startJackpot(){
   const now=performance.now();
-  jackpotActive=true;megaJackpotActive=false;jackpotStartMs=now;jackpotGraceUntil=0;
+  jackpotActive=true;megaJackpotActive=false;jackpotGoldSpawned=false;jackpotStartMs=now;jackpotGraceUntil=0;
   jackpotDurationMs=10000;jackpotCoins=[];jackpotCoinSchedule=[];
-  jackpotCoinTarget=25+Math.floor(Math.random()*6); // 25-30 coins in a normal jackpot
+  jackpotCoinTarget=22+Math.floor(Math.random()*5); // 22-26 coins in a normal jackpot
   jackpotCoinsSpawned=0;
   scheduleCoinWaves(jackpotCoinTarget,0,6000);
   showJackpotCelebration(false);sfxJackpot();
@@ -1070,20 +1078,19 @@ function startJackpot(){
 }
 function triggerMegaJackpot(){
   if(!jackpotActive){startJackpot();return;}
+  if(megaJackpotActive)return; // only one MEGA conversion per jackpot
   const now=performance.now();
   const elapsed=jackpotElapsed(now);
   const before=Math.max(0,jackpotDurationMs-elapsed);
-  const after=Math.min(30000,before+10000);
+  const after=Math.min(17000,before+7000); // +7 seconds, max ~17 seconds total remaining window
   const actuallyAdded=Math.max(0,after-before);
   jackpotDurationMs=elapsed+after;
   megaJackpotActive=true;
 
-  // A full 10-second MEGA extension gives 45-60 new coins. If the 30-second
-  // cap trims the extension, scale the extra coins proportionally.
-  const fullMegaCoins=45+Math.floor(Math.random()*16);
-  const phaseCoins=Math.max(8,Math.round(fullMegaCoins*Math.max(.15,actuallyAdded/10000)));
+  // MEGA adds 25-30 additional coins, spread early enough to remain collectible.
+  const phaseCoins=25+Math.floor(Math.random()*6);
   jackpotCoinTarget+=phaseCoins;
-  const waveWindow=Math.max(2200,Math.min(6000,actuallyAdded*.65||2200));
+  const waveWindow=Math.max(2200,Math.min(4200,actuallyAdded*.6||2200));
   scheduleCoinWaves(phaseCoins,elapsed,waveWindow);
 
   showJackpotCelebration(true);sfxMegaJackpot();restoreMusic();
@@ -1101,7 +1108,13 @@ function jackpotSpeedFactor(now){
 }
 function endJackpot(now){
   if(!jackpotActive)return;
-  jackpotActive=false;megaJackpotActive=false;
+  jackpotActive=false;megaJackpotActive=false;jackpotGoldSpawned=false;
+  goldCooldownPipes=5;
+  // If a jackpot-only gold pipe was generated too late to reach during the bonus,
+  // turn it back into an ordinary pipe so it cannot chain a new jackpot afterward.
+  for(const p of pipes){
+    if(!p.passed&&p.goldFromJackpot){p.gold=false;p.goldFromJackpot=false;p.question=null;p.isVerb=false;}
+  }
   jackpotGraceUntil=now+jackpotGraceMs;
   jackpotCoins=[];jackpotCoinSchedule=[];
   syncPhysicalDifficultyToScore();
@@ -1236,7 +1249,9 @@ function update(dt,now){
     }
 
     if(!p.passed&&p.x+pipeWidth<bird.x){
+      const wasInJackpot=jackpotActive;
       p.passed=true;totalPassed++;
+      if(!wasInJackpot)goldProgressPassed++;
       if(jackpotActive&&p.gold){
         // A gold pipe inside a jackpot pauses the timer and offers a MEGA JACKPOT challenge.
         openQuiz(p);return;
