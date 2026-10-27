@@ -573,6 +573,7 @@ let best=Math.max(0,Number(safeGet(STORAGE.best)||0),Number(savedBundle.best||0)
 let cumulative=Math.max(0,Number(safeGet(STORAGE.cumulative)||0),Number(savedBundle.cumulative||0));
 let eliteEarned=(safeGet(STORAGE.elite)==="1")||savedBundle.eliteEarned===true;
 let state="ready",lastTime=performance.now();
+let gamePaused=false,pauseStartedMs=0;
 let groundOffset=0,cloudOffset=0;
 let currentQuestion=null,currentChoices=[],quizLocked=false;
 let questionDeck=[],hardQuestionDeck=[],lastMainQuestionId=null,lastHardQuestionId=null;
@@ -774,6 +775,37 @@ function stopMusic(){
 }
 function duckMusic(){musicDucked=true;applyMusicVolumes(320)}
 function restoreMusic(){musicDucked=false;startMusic();applyMusicVolumes(380)}
+
+function pauseGameAudio(){
+  musicFadeToken++;
+  musicChannels.forEach(a=>{try{a.pause()}catch{}});
+  try{ambienceAudio.pause()}catch{}
+  for(const pool of sfxPools.values())for(const a of pool){try{a.pause();a.currentTime=0}catch{}}
+}
+function resumeGameAudio(){
+  if(!audioUnlocked||!musicEnabled)return;
+  startMusic();
+  if(ambienceAudio.paused)ambienceAudio.play().catch(()=>{});
+}
+function togglePause(){
+  if(gamePaused){
+    const now=performance.now();
+    const pausedFor=Math.max(0,now-pauseStartedMs);
+    // Freeze all gameplay clocks while paused.
+    if(jackpotActive)jackpotStartMs+=pausedFor;
+    if(fullMoonActive&&!fullMoonPauseStarted)fullMoonSuspendedMs+=pausedFor;
+    if(lifeGraceUntil>pauseStartedMs)lifeGraceUntil+=pausedFor;
+    if(jackpotGraceUntil>pauseStartedMs)jackpotGraceUntil+=pausedFor;
+    if(heartMessageUntil>pauseStartedMs)heartMessageUntil+=pausedFor;
+    if(fullMoonMessageUntil>pauseStartedMs)fullMoonMessageUntil+=pausedFor;
+    pauseStartedMs=0;gamePaused=false;lastTime=now;
+    resumeGameAudio();
+    return;
+  }
+  if(state!=="playing"&&state!=="ready")return;
+  gamePaused=true;pauseStartedMs=performance.now();
+  pauseGameAudio();
+}
 
 function sfxFlap(){playSfx("bat_flap")}
 function sfxPass(){playSfx("pipe_pass")}
@@ -1062,7 +1094,7 @@ function resetGame(){
   jackpotActive=false;megaJackpotActive=false;jackpotStartMs=0;jackpotGraceUntil=0;jackpotCoins=[];
   jackpotDurationMs=10000;jackpotCoinSchedule=[];jackpotQuizPauseStarted=0;
   jackpotCountdownPulse=0;jackpotImpactFlash=0;
-  pipes=[];state="ready";activePipe=null;currentQuestion=null;currentQuizIsGold=false;currentQuizWasDuringJackpot=false;
+  pipes=[];state="ready";gamePaused=false;pauseStartedMs=0;activePipe=null;currentQuestion=null;currentQuizIsGold=false;currentQuizWasDuringJackpot=false;
   totalPassed=0;totalGenerated=0;normalGenerated=0;goldProgressPassed=0;goldCooldownPipes=0;jackpotGoldSpawned=false;questionDeck=[];hardQuestionDeck=[];lastMainQuestionId=null;lastHardQuestionId=null;closeQuiz();stopMusic();musicDucked=false;jackpotCountdownPulse=0;celebration.classList.remove("play");celebration.style.display="none";
   const firstX=680;
   for(let i=0;i<4;i++)addPipe(firstX+i*pipeSpacing,i===0?null:pipes[i-1]);
@@ -1234,6 +1266,7 @@ function updateHearts(dt,speed){
   heartPickups=heartPickups.filter(h=>!h.collected&&h.x>-50);
 }
 function flap(){
+  if(gamePaused)return;
   ensureAudio();
   if(state==="ready"){
     state="playing";bird.vy=difficultyForScore(score).flap;sfxStart();restoreMusic();startMusic();
@@ -1544,6 +1577,7 @@ function gameOver(){
 }
 
 function update(dt,now){
+  if(gamePaused)return;
   const f=Math.min(dt/16.6667,2);
   if(state==="ready"){
     bird.y=255+Math.sin(performance.now()/260)*8;
@@ -2010,6 +2044,12 @@ function draw(){
   drawSky();for(const p of pipes)drawPipe(p);drawCoins();drawHeartPickups();drawMoonFragments();drawGround();drawBird();drawFullMoonGlow();drawScore();drawLives();drawMoonMeter();drawClassStatus();drawJackpotCountdown();
   if(state==="ready")panel("FLAPPY VERB",["CONDICIONAL · NOCHE DE OCTUBRE","Vuela. Pasa. Elige."],"ESPACIO / CLIC para empezar");
   if(state==="gameover")panel("FIN DEL JUEGO",[`PUNTUACIÓN: ${score}`,`TOTAL: ${Math.min(cumulative,CUMULATIVE_TARGET)} / ${CUMULATIVE_TARGET}`,eliteEarned?`MEJOR: ${best} · ELITE ✓`:`MEJOR: ${best} / ${ELITE_TARGET}`],"Elige JUGAR o PERSONALIZAR MURCIÉLAGO");
+  if(gamePaused){
+    ctx.save();
+    ctx.fillStyle="#080611cc";ctx.fillRect(0,0,W,H);
+    panel("PAUSA",["La partida está pausada."],"ESC para continuar");
+    ctx.restore();
+  }
 }
 
 function loop(now){
@@ -2020,6 +2060,13 @@ function loop(now){
 // INPUT
 // ------------------------------------------------------------
 document.addEventListener("keydown",e=>{
+  if(e.key==="Escape"){
+    if(menuOverlay.style.display!=="flex"&&customizeOverlay.style.display!=="flex"&&classOverlay.style.display!=="flex"&&state!=="quiz"&&state!=="gameover"){
+      e.preventDefault();togglePause();
+    }
+    return;
+  }
+  if(gamePaused)return;
   if(classOverlay.style.display==="flex"){
     if(["1","2","3"].includes(e.key)){e.preventDefault();startRunWithClass(["bruja","fantasma","vampiro"][Number(e.key)-1]);}
     return;
@@ -2035,6 +2082,7 @@ document.addEventListener("keydown",e=>{
   }else if(e.key==="Enter"&&state==="gameover"){returnToMenuFromGameOver()}
 });
 canvas.addEventListener("pointerdown",()=>{
+  if(gamePaused)return;
   if(menuOverlay.style.display==="flex"||customizeOverlay.style.display==="flex"||classOverlay.style.display==="flex")return;
   if(state==="quiz")return;
   if(state==="gameover"){returnToMenuFromGameOver()}else flap();
