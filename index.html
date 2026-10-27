@@ -3,18 +3,18 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Flappy Verb - Pretérito</title>
+<title>Flappy Verb - Condicional: Noche de Octubre</title>
 <style>
   :root{
-    --sky:#70c5ce; --ink:#1d1d1d; --cream:#fff7d6;
-    --green:#f08a2f; --gold:#f5c542; --gold2:#ffe98a; --goldDark:#a96e05;
+    --sky:#0d1430; --ink:#17131f; --cream:#fff1d6;
+    --green:#d56a2b; --gold:#f5b942; --gold2:#ffe39a; --goldDark:#7e4b08;
   }
   *{box-sizing:border-box}
   html,body{
-    margin:0;width:100%;height:100%;overflow:hidden;background:#111;
+    margin:0;width:100%;height:100%;overflow:hidden;background:#070912;
     font-family:"Courier New",monospace;
   }
-  #wrap{width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#111}
+  #wrap{width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#070912}
   canvas{
     width:min(100vw,160vh);height:min(62.5vw,100vh);
     image-rendering:pixelated;image-rendering:crisp-edges;
@@ -45,7 +45,7 @@
     color:#9b6500;font-weight:900;font-size:18px;letter-spacing:2px;
   }
   #quizTitle{
-    margin:0 0 8px;font-size:clamp(22px,3vw,38px);color:#d66516;
+    margin:0 0 8px;font-size:clamp(22px,3vw,38px);color:#df762f;
     text-transform:uppercase;letter-spacing:1px;
   }
   #quizCard.gold #quizTitle{color:#9b6500}
@@ -85,7 +85,7 @@
     background:#ffd84d;border:4px solid #8f5d00;box-shadow:inset 5px 0 #fff2f2,inset -5px 0 #d69b11;
     animation:coinFall var(--dur) cubic-bezier(.22,.64,.55,1) var(--delay) forwards;
   }
-  .coin::after{content:"$";position:absolute;inset:0;display:grid;place-items:center;font:900 14px Arial;color:#9a6500}
+  .coin::after{content:"✦";position:absolute;inset:0;display:grid;place-items:center;font:900 14px Arial;color:#9a6500}
   @keyframes coinFall{
     0%{transform:translateY(-70px) rotate(0deg);opacity:0}
     8%{opacity:1}
@@ -99,41 +99,53 @@
     100%{opacity:0;transform:translate(-50%,-62%) scale(1.08)}
   }
 
-  #menuOverlay,#customizeOverlay{
+  #menuOverlay,#customizeOverlay,#classOverlay{
     position:fixed;inset:0;display:none;align-items:center;justify-content:center;
     background:rgba(0,0,0,.46);padding:20px;z-index:20;
   }
+  #classOverlay{z-index:24;background:rgba(4,5,14,.72)}
+  .classCard{width:min(880px,94vw);background:#211a31;border:5px solid #0a0810;color:#fff1d6;box-shadow:8px 8px 0 #0005;padding:24px;text-align:center}
+  .classTitle{margin:0;color:#f09a43;font-size:clamp(26px,4vw,42px)}
+  .classSub{margin:8px 0 18px;color:#c8bfd3;font-weight:700}
+  .classChoices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+  .classChoice{border:4px solid #0a0810;background:#342743;color:#fff1d6;padding:18px 12px;cursor:pointer;box-shadow:4px 4px 0 #0005;font-family:"Courier New",monospace;min-height:170px}
+  .classChoice:hover{background:#463455;transform:translateY(-2px)}
+  .classChoice:active{transform:translate(2px,2px);box-shadow:2px 2px 0 #0005}
+  .classIcon{font-size:42px;display:block;margin-bottom:6px}
+  .className{display:block;font-size:22px;font-weight:900;color:#f2a04d;margin-bottom:9px}
+  .classEffect{display:block;font-size:14px;line-height:1.35;font-weight:700}
+  .classKey{display:block;margin-top:11px;color:#a89bb6;font-size:12px}
   .menuCard{
-    width:min(700px,92vw);background:#fff7d6;border:5px solid #171717;
+    width:min(700px,92vw);background:#211a31;border:5px solid #0a0810;color:#fff1d6;
     box-shadow:8px 8px 0 #0005;padding:24px;text-align:center;
   }
-  .menuTitle{margin:0 0 10px;color:#d66516;font-size:clamp(28px,4vw,46px)}
+  .menuTitle{margin:0 0 10px;color:#df762f;font-size:clamp(28px,4vw,46px)}
   .progressPanel{
-    margin:16px auto 4px;max-width:540px;border:4px solid #171717;background:#fffdf0;
+    margin:16px auto 4px;max-width:540px;border:4px solid #171717;background:#302642;color:#fff1d6;
     padding:12px 14px;display:grid;gap:7px;text-align:left;font:900 14px "Courier New",monospace;
   }
   .progressRow{display:flex;justify-content:space-between;gap:14px;align-items:center}
-  .progressValue{color:#b94f0d;text-align:right}
+  .progressValue{color:#c75f2a;text-align:right}
   #eliteBadge{display:none;margin-left:7px;padding:2px 7px;border:2px solid #171717;background:#ff9b2f;color:#171717}
   #prizeStatus{display:none;margin-top:3px;padding:8px;text-align:center;border:3px solid #6f4700;background:#ffe27a;color:#6f4700;font-size:17px}
   .menuButtons{display:grid;gap:14px;margin-top:20px}
   .menuButtons button,.customBtn{
     font:900 19px "Courier New",monospace;padding:14px;border:4px solid #171717;
-    background:#f3d53c;cursor:pointer;box-shadow:4px 4px 0 #0004;
+    background:#e78338;cursor:pointer;box-shadow:4px 4px 0 #0004;
   }
   .menuButtons button:active,.customBtn:active{transform:translate(2px,2px)}
   #customizeOverlay .menuCard{width:min(920px,95vw);max-height:90vh;overflow:auto;text-align:left}
   .customHeader{display:flex;justify-content:space-between;align-items:center;gap:12px}
-  .customHeader h2{margin:0;color:#d66516}
+  .customHeader h2{margin:0;color:#df762f}
   .customGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:16px}
-  .category{border:4px solid #171717;background:white;padding:12px}
+  .category{border:4px solid #0a0810;background:#302642;color:#fff1d6;padding:12px}
   .category h3{margin:0 0 10px;font-size:18px}
   .options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
   .option{
-    position:relative;min-height:88px;border:3px solid #171717;background:#fff7d6;
+    position:relative;min-height:88px;border:3px solid #171717;background:#fff1d6;
     cursor:pointer;padding:8px;text-align:center;font:700 12px "Courier New",monospace;
   }
-  .option.selected{outline:5px solid #f08a2f}
+  .option.selected{outline:5px solid #e78338}
   .option.locked{background:#d7d7d7;color:#555;cursor:not-allowed}
   .option.locked .preview{filter:grayscale(1) brightness(.35)}
   .preview{height:42px;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:900}
@@ -155,12 +167,14 @@
   @media(max-width:760px){
     .customGrid{grid-template-columns:1fr}
     .options{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .classChoices{grid-template-columns:1fr}
+    .classChoice{min-height:110px}
   }
 
 </style>
 </head>
 <body>
-<div id="wrap"><canvas id="game" width="960" height="600" aria-label="Flappy Verb"></canvas></div>
+<div id="wrap"><canvas id="game" width="960" height="600" aria-label="Flappy Verb Condicional - Noche de Octubre"></canvas></div>
 
 <div id="hudButtons">
   <button id="musicBtn" class="hudBtn">MÚSICA ✓</button>
@@ -169,7 +183,7 @@
 
 <div id="quizOverlay">
   <div id="quizCard">
-    <h2 id="quizTitle">¡Conjuga!</h2>
+    <h2 id="quizTitle">¡CONDICIONAL!</h2>
     <div id="quizPrompt"></div>
     <div id="verbHint"></div>
     <div id="answerChoices" aria-label="Opciones de respuesta"></div>
@@ -183,7 +197,7 @@
 <div id="menuOverlay">
   <div class="menuCard">
     <h1 class="menuTitle">FLAPPY VERB</h1>
-    <div style="font-weight:900;color:#d66516">PRETÉRITO</div>
+    <div style="font-weight:900;color:#f39a3d">CONDICIONAL · NOCHE DE OCTUBRE</div>
     <div class="progressPanel">
       <div class="progressRow"><span>PROGRESO TOTAL</span><strong id="cumulativeDisplay" class="progressValue">0 / 1000</strong></div>
       <div class="progressRow"><span>PRÓXIMO DESBLOQUEO</span><strong id="nextUnlockDisplay" class="progressValue">25</strong></div>
@@ -192,7 +206,31 @@
     </div>
     <div class="menuButtons">
       <button id="playBtn">JUGAR</button>
-      <button id="customizeBtn">PERSONALIZAR AVE</button>
+      <button id="customizeBtn">PERSONALIZAR MURCIÉLAGO</button>
+    </div>
+  </div>
+</div>
+
+<div id="classOverlay">
+  <div class="classCard">
+    <h2 class="classTitle">ELIGE TU CLASE</h2>
+    <div class="classSub">Cada clase cambia una cosa pequeña durante esta partida.</div>
+    <div class="classChoices">
+      <button class="classChoice" data-class="bruja">
+        <span class="classIcon">🧙</span><span class="className">BRUJA</span>
+        <span class="classEffect">Tu primer error de gramática no quita un corazón.</span>
+        <span class="classKey">TECLA 1</span>
+      </button>
+      <button class="classChoice" data-class="fantasma">
+        <span class="classIcon">👻</span><span class="className">FANTASMA</span>
+        <span class="classEffect">Tu primer choque no quita un corazón.</span>
+        <span class="classKey">TECLA 2</span>
+      </button>
+      <button class="classChoice" data-class="vampiro">
+        <span class="classIcon">🧛</span><span class="className">VAMPIRO</span>
+        <span class="classEffect">Los corazones aparecen con el doble de frecuencia.</span>
+        <span class="classKey">TECLA 3</span>
+      </button>
     </div>
   </div>
 </div>
@@ -200,7 +238,7 @@
 <div id="customizeOverlay">
   <div class="menuCard">
     <div class="customHeader">
-      <h2>PERSONALIZAR AVE</h2>
+      <h2>PERSONALIZAR MURCIÉLAGO</h2>
       <div><span>Récord: <strong id="customBest">0</strong></span> · <span>Total: <strong id="customTotal">0</strong></span></div>
     </div>
     <div id="customGrid" class="customGrid"></div>
@@ -235,6 +273,7 @@ const sfxBtn=document.getElementById("sfxBtn");
 const celebration=document.getElementById("celebrationLayer");
 const menuOverlay=document.getElementById("menuOverlay");
 const customizeOverlay=document.getElementById("customizeOverlay");
+const classOverlay=document.getElementById("classOverlay");
 const customGrid=document.getElementById("customGrid");
 const customBest=document.getElementById("customBest");
 const customTotal=document.getElementById("customTotal");
@@ -247,24 +286,25 @@ const unlockToast=document.getElementById("unlockToast");
 const W=canvas.width,H=canvas.height,GROUND_H=90;
 
 // ------------------------------------------------------------
-// CURATED PRETERITE QUESTION BANK: 72 questions, balanced by subject
+// CURATED CONDITIONAL QUESTION BANK: 72 questions, balanced by subject
+// Regular + common irregular stems; hypothetical, polite, and future-from-past uses.
 // ------------------------------------------------------------
-const questions=[{"id":1,"group":"yo","verb":"hablar","answer":"hablé","sentence":"Ayer yo _____ con mi abuela por teléfono.","wrong":["habló","hablaba"]},{"id":2,"group":"yo","verb":"comer","answer":"comí","sentence":"Al mediodía yo _____ una quesadilla antes de la práctica.","wrong":["comió","comía"]},{"id":3,"group":"yo","verb":"vivir","answer":"viví","sentence":"El año pasado yo _____ en otra ciudad durante tres meses.","wrong":["vivió","vivía"]},{"id":4,"group":"yo","verb":"buscar","answer":"busqué","sentence":"Anoche yo _____ mis audífonos por toda la casa.","wrong":["buscé","buscó"]},{"id":5,"group":"yo","verb":"llegar","answer":"llegué","sentence":"Ayer yo _____ a la escuela cinco minutos temprano.","wrong":["llegé","llegó"]},{"id":6,"group":"yo","verb":"empezar","answer":"empecé","sentence":"El lunes yo _____ un libro nuevo en la clase.","wrong":["empezé","empezó"]},{"id":7,"group":"yo","verb":"tener","answer":"tuve","sentence":"Ayer yo _____ una reunión después de la escuela.","wrong":["tení","tuvo"],"hard":true},{"id":8,"group":"yo","verb":"hacer","answer":"hice","sentence":"Anoche yo _____ toda la tarea antes de cenar.","wrong":["hací","hizo"],"hard":true},{"id":9,"group":"yo","verb":"poner","answer":"puse","sentence":"Esta mañana yo _____ mi mochila junto a la puerta.","wrong":["poní","puso"],"hard":true},{"id":10,"group":"yo","verb":"venir","answer":"vine","sentence":"Ayer yo _____ a la biblioteca para estudiar con un amigo.","wrong":["vení","vino"],"hard":true},{"id":11,"group":"yo","verb":"dar","answer":"di","sentence":"Ayer yo _____ mi proyecto al profesor al final de la clase.","wrong":["dio","daba"],"hard":true},{"id":12,"group":"yo","verb":"levantarse","answer":"me levanté","sentence":"El sábado yo _____ temprano para ir de excursión.","wrong":["se levantó","me levantaba"]},{"id":13,"group":"tu","verb":"estudiar","answer":"estudiaste","sentence":"Anoche tú _____ veinte minutos para el examen.","wrong":["estudió","estudiabas"]},{"id":14,"group":"tu","verb":"beber","answer":"bebiste","sentence":"Después del partido, tú _____ dos vasos de agua.","wrong":["bebió","bebías"]},{"id":15,"group":"tu","verb":"escribir","answer":"escribiste","sentence":"Ayer tú _____ un mensaje a tu compañero de grupo.","wrong":["escribió","escribías"]},{"id":16,"group":"tu","verb":"correr","answer":"corriste","sentence":"El sábado tú _____ tres kilómetros en el parque.","wrong":["corrió","corrías"]},{"id":17,"group":"tu","verb":"abrir","answer":"abriste","sentence":"Esta mañana tú _____ la ventana antes de empezar la clase.","wrong":["abrió","abrías"]},{"id":18,"group":"tu","verb":"estar","answer":"estuviste","sentence":"Ayer tú _____ en la biblioteca hasta las cinco.","wrong":["estabas","estuvo"],"hard":true},{"id":19,"group":"tu","verb":"poder","answer":"pudiste","sentence":"Finalmente tú _____ terminar el nivel antes de la cena.","wrong":["podiste","pudo"],"hard":true},{"id":20,"group":"tu","verb":"querer","answer":"quisiste","sentence":"Ayer tú _____ ayudar a tu amigo con el proyecto.","wrong":["queriste","quiso"],"hard":true},{"id":21,"group":"tu","verb":"saber","answer":"supiste","sentence":"Ayer tú _____ la respuesta después de leer la última pista.","wrong":["sabiste","supo"],"hard":true},{"id":22,"group":"tu","verb":"decir","answer":"dijiste","sentence":"En la reunión tú _____ exactamente lo que pasó.","wrong":["deciste","dijo"],"hard":true},{"id":23,"group":"tu","verb":"traer","answer":"trajiste","sentence":"Hoy tú _____ tu permiso firmado a la escuela.","wrong":["trajistes","trajo"],"hard":true},{"id":24,"group":"tu","verb":"ir","answer":"fuiste","sentence":"El fin de semana pasado tú _____ al cine con tus primos.","wrong":["fue","ibas"],"hard":true},{"id":25,"group":"el","verb":"trabajar","answer":"trabajó","sentence":"Ayer él _____ dos horas en su proyecto de ciencias.","wrong":["trabajo","trabajaba"]},{"id":26,"group":"el","verb":"aprender","answer":"aprendió","sentence":"En esa lección ella _____ una estrategia nueva.","wrong":["aprendía","aprendieron"]},{"id":27,"group":"el","verb":"abrir","answer":"abrió","sentence":"Esta mañana usted _____ la puerta a las ocho.","wrong":["abrío","abría"]},{"id":28,"group":"el","verb":"visitar","answer":"visitó","sentence":"El sábado ella _____ a sus abuelos en Boise.","wrong":["visitaba","visitaron"]},{"id":29,"group":"el","verb":"cocinar","answer":"cocinó","sentence":"Anoche él _____ pasta para toda su familia.","wrong":["cocinaba","cocinaron"]},{"id":30,"group":"el","verb":"ir","answer":"fue","sentence":"Después de clase ella _____ directamente a la práctica.","wrong":["iba","fueron"],"hard":true},{"id":31,"group":"el","verb":"ser","answer":"fue","sentence":"La presentación de ayer _____ muy corta y clara.","wrong":["era","fueron"],"hard":true},{"id":32,"group":"el","verb":"hacer","answer":"hizo","sentence":"Ayer él _____ un dibujo para explicar su idea.","wrong":["hació","hacía"],"hard":true},{"id":33,"group":"el","verb":"dormir","answer":"durmió","sentence":"Anoche ella _____ ocho horas completas.","wrong":["dormió","dormía"],"hard":true},{"id":34,"group":"el","verb":"pedir","answer":"pidió","sentence":"En el restaurante usted _____ una sopa y un vaso de agua.","wrong":["pedió","pedía"],"hard":true},{"id":35,"group":"el","verb":"leer","answer":"leyó","sentence":"Ayer ella _____ el artículo completo durante la clase.","wrong":["leió","leía"],"hard":true},{"id":36,"group":"el","verb":"oír","answer":"oyó","sentence":"De repente él _____ un ruido fuerte detrás de la puerta.","wrong":["oió","oía"],"hard":true},{"id":37,"group":"nosotros","verb":"terminar","answer":"terminamos","sentence":"Ayer nosotros _____ el proyecto antes del almuerzo.","wrong":["terminemos","terminábamos"]},{"id":38,"group":"nosotros","verb":"comer","answer":"comimos","sentence":"El viernes nosotros _____ juntos después del partido.","wrong":["comíamos","comieron"]},{"id":39,"group":"nosotros","verb":"vivir","answer":"vivimos","sentence":"El verano pasado nosotros _____ un mes con nuestros abuelos.","wrong":["vivíamos","vivieron"]},{"id":40,"group":"nosotros","verb":"practicar","answer":"practicamos","sentence":"Ayer nosotros _____ la presentación tres veces.","wrong":["practicábamos","practicaron"]},{"id":41,"group":"nosotros","verb":"ayudar","answer":"ayudamos","sentence":"El sábado nosotros _____ a limpiar el parque.","wrong":["ayudábamos","ayudaron"]},{"id":42,"group":"nosotros","verb":"tener","answer":"tuvimos","sentence":"Ayer nosotros _____ tiempo para jugar después de terminar la tarea.","wrong":["tenimos","teníamos"],"hard":true},{"id":43,"group":"nosotros","verb":"estar","answer":"estuvimos","sentence":"El domingo nosotros _____ en casa durante toda la tarde.","wrong":["estábamos","estuvieron"],"hard":true},{"id":44,"group":"nosotros","verb":"poder","answer":"pudimos","sentence":"Al final nosotros _____ resolver el problema sin ayuda.","wrong":["podimos","podíamos"],"hard":true},{"id":45,"group":"nosotros","verb":"poner","answer":"pusimos","sentence":"Antes de la fiesta nosotros _____ las sillas en un círculo.","wrong":["ponimos","poníamos"],"hard":true},{"id":46,"group":"nosotros","verb":"venir","answer":"vinimos","sentence":"Ayer nosotros _____ a la escuela para el ensayo.","wrong":["venimos","veníamos"],"hard":true},{"id":47,"group":"nosotros","verb":"decir","answer":"dijimos","sentence":"Después del juego nosotros _____ la verdad sobre lo que pasó.","wrong":["decimos","decíamos"],"hard":true},{"id":48,"group":"nosotros","verb":"divertirse","answer":"nos divertimos","sentence":"En la excursión nosotros _____ mucho con nuestros amigos.","wrong":["nos divertíamos","se divirtieron"],"hard":true},{"id":49,"group":"ellos","verb":"hablar","answer":"hablaron","sentence":"Ayer ellos _____ con el director después de clase.","wrong":["hablaban","habló"]},{"id":50,"group":"ellos","verb":"vender","answer":"vendieron","sentence":"El viernes ellas _____ todas las entradas para el evento.","wrong":["vendían","vendió"]},{"id":51,"group":"ellos","verb":"recibir","answer":"recibieron","sentence":"Ayer ustedes _____ los resultados por correo electrónico.","wrong":["recibían","recibió"]},{"id":52,"group":"ellos","verb":"caminar","answer":"caminaron","sentence":"Después de cenar ellos _____ hasta el parque y regresaron.","wrong":["caminaban","caminó"]},{"id":53,"group":"ellos","verb":"estudiar","answer":"estudiaron","sentence":"Anoche ellas _____ juntas durante una hora.","wrong":["estudiaban","estudió"]},{"id":54,"group":"ellos","verb":"ir","answer":"fueron","sentence":"El sábado ustedes _____ al museo con la clase.","wrong":["iban","fue"],"hard":true},{"id":55,"group":"ellos","verb":"tener","answer":"tuvieron","sentence":"Ayer ellos _____ dos exámenes en la misma mañana.","wrong":["tenieron","tenían"],"hard":true},{"id":56,"group":"ellos","verb":"hacer","answer":"hicieron","sentence":"Después de la práctica ellas _____ la tarea en la biblioteca.","wrong":["hacieron","hacían"],"hard":true},{"id":57,"group":"ellos","verb":"decir","answer":"dijeron","sentence":"Al final ustedes _____ sus respuestas al grupo.","wrong":["decieron","decían"],"hard":true},{"id":58,"group":"ellos","verb":"dormir","answer":"durmieron","sentence":"Después del viaje ellos _____ casi diez horas.","wrong":["dormieron","dormían"],"hard":true},{"id":59,"group":"ellos","verb":"oír","answer":"oyeron","sentence":"De repente ellas _____ una alarma en el pasillo.","wrong":["oieron","oían"],"hard":true},{"id":60,"group":"ellos","verb":"preferir","answer":"prefirieron","sentence":"Después de probar los dos juegos, ustedes _____ el segundo.","wrong":["preferieron","preferían"],"hard":true},{"id":61,"group":"nouns","verb":"comprar","answer":"compró","sentence":"Ayer Sofía _____ una libreta nueva para la clase.","wrong":["compraba","compraron"]},{"id":62,"group":"nouns","verb":"viajar","answer":"viajamos","sentence":"El verano pasado mi hermano y yo _____ a California con la familia.","wrong":["viajábamos","viajaron"]},{"id":63,"group":"nouns","verb":"comer","answer":"comieron","sentence":"Después del partido Ana y Mateo _____ pizza con el equipo.","wrong":["comían","comió"]},{"id":64,"group":"nouns","verb":"ganar","answer":"ganó","sentence":"El viernes el equipo _____ el partido por un punto.","wrong":["ganaba","ganaron"]},{"id":65,"group":"nouns","verb":"escribir","answer":"escribieron","sentence":"Ayer los estudiantes _____ una reflexión corta al final de la clase.","wrong":["escribían","escribió"]},{"id":66,"group":"nouns","verb":"poner","answer":"puso","sentence":"Antes de empezar, la profesora _____ las instrucciones en la pantalla.","wrong":["ponió","ponía"],"hard":true},{"id":67,"group":"nouns","verb":"venir","answer":"vinieron","sentence":"Ayer Elena y su hermana _____ a la reunión después de la escuela.","wrong":["venieron","venían"],"hard":true},{"id":68,"group":"nouns","verb":"poder","answer":"pudieron","sentence":"Al final mis padres _____ arreglar la bicicleta.","wrong":["podieron","podían"],"hard":true},{"id":69,"group":"nouns","verb":"estar","answer":"estuvo","sentence":"Ayer Carlos _____ en la oficina durante veinte minutos.","wrong":["estaba","estuvieron"],"hard":true},{"id":70,"group":"nouns","verb":"leer","answer":"leyeron","sentence":"Anoche mis amigos _____ el capítulo completo para la clase.","wrong":["leieron","leían"],"hard":true},{"id":71,"group":"nouns","verb":"construir","answer":"construyeron","sentence":"El sábado los voluntarios _____ una rampa nueva para el parque.","wrong":["construieron","construían"],"hard":true},{"id":72,"group":"nouns","verb":"caer","answer":"cayó","sentence":"Durante el almuerzo la botella _____ de la mesa al suelo.","wrong":["caió","caía"],"hard":true}];
+const questions=[{"id":1,"group":"yo","verb":"hablar","answer":"hablaría","sentence":"Si tuviera un problema con un amigo, yo _____ con él en privado.","wrong":["hablarías","hablé"]},{"id":2,"group":"yo","verb":"comer","answer":"comería","sentence":"Si pudiera elegir la cena, yo _____ tacos esta noche.","wrong":["comerías","comí"]},{"id":3,"group":"yo","verb":"vivir","answer":"viviría","sentence":"Si pudiera mudarme por un año, yo _____ cerca del mar.","wrong":["vivirías","viviré"]},{"id":4,"group":"yo","verb":"estudiar","answer":"estudiaría","sentence":"Con un examen difícil mañana, yo _____ un poco más esta noche.","wrong":["estudiarías","estudié"]},{"id":5,"group":"yo","verb":"viajar","answer":"viajaría","sentence":"Si tuviera un mes libre, yo _____ por varios países.","wrong":["viajarías","viajé"]},{"id":6,"group":"yo","verb":"comprar","answer":"compraría","sentence":"Con cien dólares extra, yo _____ algo útil antes que algo caro.","wrong":["comprarías","compré"]},{"id":7,"group":"yo","verb":"tener","answer":"tendría","sentence":"Con menos tareas, yo _____ más tiempo para practicar mi hobby.","wrong":["tenería","tendrías"],"hard":true},{"id":8,"group":"yo","verb":"hacer","answer":"haría","sentence":"Si lloviera todo el fin de semana, yo _____ una maratón de películas.","wrong":["hacería","harías"],"hard":true},{"id":9,"group":"yo","verb":"poder","answer":"podría","sentence":"Con una hora más, yo _____ terminar el proyecto hoy.","wrong":["podería","podrías"],"hard":true},{"id":10,"group":"yo","verb":"poner","answer":"pondría","sentence":"Si mi cuarto fuera más grande, yo _____ un escritorio junto a la ventana.","wrong":["ponería","pondrías"],"hard":true},{"id":11,"group":"yo","verb":"venir","answer":"vendría","sentence":"Si me invitaran al partido, yo _____ después de cenar.","wrong":["veniría","vendrías"],"hard":true},{"id":12,"group":"yo","verb":"decir","answer":"diría","sentence":"Si alguien me preguntara mi opinión, yo _____ la verdad con respeto.","wrong":["deciría","dirías"],"hard":true},{"id":13,"group":"tu","verb":"practicar","answer":"practicarías","sentence":"Si quisieras mejorar rápido, tú _____ un poco cada día.","wrong":["practicaría","practicaste"]},{"id":14,"group":"tu","verb":"beber","answer":"beberías","sentence":"Después de correr cinco kilómetros, tú _____ mucha agua.","wrong":["bebería","bebiste"]},{"id":15,"group":"tu","verb":"escribir","answer":"escribirías","sentence":"Si tu amigo se mudara, tú le _____ mensajes para mantener el contacto.","wrong":["escribiría","escribiste"]},{"id":16,"group":"tu","verb":"elegir","answer":"elegirías","sentence":"Si hubiera tres películas buenas, tú _____ la más divertida.","wrong":["elegiría","elegiste"]},{"id":17,"group":"tu","verb":"ayudar","answer":"ayudarías","sentence":"Si un compañero no entendiera la actividad, tú lo _____.","wrong":["ayudaría","ayudaste"]},{"id":18,"group":"tu","verb":"viajar","answer":"viajarías","sentence":"Con un boleto gratis, tú _____ a otro país este verano.","wrong":["viajaría","viajaste"]},{"id":19,"group":"tu","verb":"tener","answer":"tendrías","sentence":"Sin tu teléfono por una semana, tú _____ que buscar otras formas de entretenerte.","wrong":["tenerías","tendría"],"hard":true},{"id":20,"group":"tu","verb":"poder","answer":"podrías","sentence":"¿Tú _____ ayudarme a mover esta mesa, por favor?","wrong":["poderías","podría"],"hard":true},{"id":21,"group":"tu","verb":"querer","answer":"querrías","sentence":"Si pudieras elegir cualquier mascota, ¿cuál _____ tú?","wrong":["quererías","querría"],"hard":true},{"id":22,"group":"tu","verb":"saber","answer":"sabrías","sentence":"Con una pista más, tú _____ la respuesta.","wrong":["saberías","sabría"],"hard":true},{"id":23,"group":"tu","verb":"salir","answer":"saldrías","sentence":"Si terminaras temprano, tú _____ con tus amigos después de clase.","wrong":["salirías","saldría"],"hard":true},{"id":24,"group":"tu","verb":"hacer","answer":"harías","sentence":"¿Qué _____ tú si encontraras una cartera en el pasillo?","wrong":["hacerías","haría"],"hard":true},{"id":25,"group":"el","verb":"trabajar","answer":"trabajaría","sentence":"Con un horario diferente, él _____ después de la escuela.","wrong":["trabajarías","trabajó"]},{"id":26,"group":"el","verb":"aprender","answer":"aprendería","sentence":"Ella _____ más rápido si practicara un poco cada día.","wrong":["aprenderías","aprendió"]},{"id":27,"group":"el","verb":"usar","answer":"usaría","sentence":"Usted _____ esta aplicación si necesitara organizar muchas tareas.","wrong":["usarías","usó"]},{"id":28,"group":"el","verb":"cocinar","answer":"cocinaría","sentence":"Si tuviera todos los ingredientes, ella _____ la cena para su familia.","wrong":["cocinarías","cocinó"]},{"id":29,"group":"el","verb":"jugar","answer":"jugaría","sentence":"Él _____ en el torneo si no tuviera práctica ese día.","wrong":["jugarías","jugó"]},{"id":30,"group":"el","verb":"deber","answer":"debería","sentence":"Si quisiera dormir mejor, ella _____ dejar el teléfono antes de acostarse.","wrong":["deberías","debió"]},{"id":31,"group":"el","verb":"tener","answer":"tendría","sentence":"Con más experiencia, él _____ más confianza al presentar.","wrong":["tenería","tendrías"],"hard":true},{"id":32,"group":"el","verb":"hacer","answer":"haría","sentence":"Usted _____ un buen trabajo con un poco más de tiempo.","wrong":["hacería","harías"],"hard":true},{"id":33,"group":"el","verb":"poder","answer":"podría","sentence":"Ella dijo que _____ venir a la reunión después de las cinco.","wrong":["podería","podrías"],"hard":true},{"id":34,"group":"el","verb":"poner","answer":"pondría","sentence":"Si hiciera frío, él _____ una chaqueta antes de salir.","wrong":["ponería","pondrías"],"hard":true},{"id":35,"group":"el","verb":"querer","answer":"querría","sentence":"Ella _____ participar si el proyecto fuera sobre música.","wrong":["querería","querrías"],"hard":true},{"id":36,"group":"el","verb":"decir","answer":"diría","sentence":"El profesor _____ la respuesta si nadie pudiera resolver el problema.","wrong":["deciría","dirías"],"hard":true},{"id":37,"group":"nosotros","verb":"terminar","answer":"terminaríamos","sentence":"Con veinte minutos más, nosotros _____ el proyecto hoy.","wrong":["terminarían","terminamos"]},{"id":38,"group":"nosotros","verb":"comer","answer":"comeríamos","sentence":"Si todos tuviéramos hambre, nosotros _____ antes de la película.","wrong":["comerían","comimos"]},{"id":39,"group":"nosotros","verb":"vivir","answer":"viviríamos","sentence":"Si pudiéramos elegir, nosotros _____ en un lugar con inviernos menos fríos.","wrong":["vivirían","vivimos"]},{"id":40,"group":"nosotros","verb":"practicar","answer":"practicaríamos","sentence":"Antes de una competencia importante, nosotros _____ varias veces.","wrong":["practicarían","practicamos"]},{"id":41,"group":"nosotros","verb":"ayudar","answer":"ayudaríamos","sentence":"Si nuestros amigos lo necesitaran, nosotros los _____ sin problema.","wrong":["ayudarían","ayudamos"]},{"id":42,"group":"nosotros","verb":"viajar","answer":"viajaríamos","sentence":"Con suficiente dinero, nosotros _____ durante las vacaciones de verano.","wrong":["viajarían","viajamos"]},{"id":43,"group":"nosotros","verb":"tener","answer":"tendríamos","sentence":"Sin internet, nosotros _____ que buscar otra manera de hacer la investigación.","wrong":["teneríamos","tendrían"],"hard":true},{"id":44,"group":"nosotros","verb":"hacer","answer":"haríamos","sentence":"Si el clima fuera mejor, nosotros _____ la actividad afuera.","wrong":["haceríamos","harían"],"hard":true},{"id":45,"group":"nosotros","verb":"poder","answer":"podríamos","sentence":"Con instrucciones más claras, nosotros _____ empezar sin ayuda.","wrong":["poderíamos","podrían"],"hard":true},{"id":46,"group":"nosotros","verb":"poner","answer":"pondríamos","sentence":"Si organizáramos una fiesta, nosotros _____ música en el patio.","wrong":["poneríamos","pondrían"],"hard":true},{"id":47,"group":"nosotros","verb":"salir","answer":"saldríamos","sentence":"Si acabáramos la tarea temprano, nosotros _____ a caminar.","wrong":["saliríamos","saldrían"],"hard":true},{"id":48,"group":"nosotros","verb":"venir","answer":"vendríamos","sentence":"Nosotros dijimos que _____ al evento si terminábamos a tiempo.","wrong":["veniríamos","vendrían"],"hard":true},{"id":49,"group":"ellos","verb":"hablar","answer":"hablarían","sentence":"Si hubiera un problema, ellos _____ con el entrenador después del partido.","wrong":["hablaríamos","hablaron"]},{"id":50,"group":"ellos","verb":"vender","answer":"venderían","sentence":"Con más tiempo, ellas _____ más boletos para el evento.","wrong":["venderíamos","vendieron"]},{"id":51,"group":"ellos","verb":"recibir","answer":"recibirían","sentence":"Ustedes _____ una notificación si la escuela cerrara por nieve.","wrong":["recibiríamos","recibieron"]},{"id":52,"group":"ellos","verb":"caminar","answer":"caminarían","sentence":"Si el parque estuviera más cerca, ellos _____ hasta allí.","wrong":["caminaríamos","caminaron"]},{"id":53,"group":"ellos","verb":"estudiar","answer":"estudiarían","sentence":"Ellas _____ juntas si tuvieran el mismo examen.","wrong":["estudiaríamos","estudiaron"]},{"id":54,"group":"ellos","verb":"compartir","answer":"compartirían","sentence":"Si hubiera suficiente comida, ustedes la _____ con todos.","wrong":["compartiríamos","compartieron"]},{"id":55,"group":"ellos","verb":"tener","answer":"tendrían","sentence":"Con menos distracciones, ellos _____ más tiempo para terminar.","wrong":["tenerían","tendríamos"],"hard":true},{"id":56,"group":"ellos","verb":"hacer","answer":"harían","sentence":"Si recibieran un día libre, ellas _____ algo divertido juntas.","wrong":["hacerían","haríamos"],"hard":true},{"id":57,"group":"ellos","verb":"poder","answer":"podrían","sentence":"Con permiso, ustedes _____ usar el gimnasio después de clase.","wrong":["poderían","podríamos"],"hard":true},{"id":58,"group":"ellos","verb":"poner","answer":"pondrían","sentence":"Si decoraran el salón, ellos _____ luces alrededor de la puerta.","wrong":["ponerían","pondríamos"],"hard":true},{"id":59,"group":"ellos","verb":"querer","answer":"querrían","sentence":"Ellas _____ quedarse más tiempo si la actividad fuera más divertida.","wrong":["quererían","querríamos"],"hard":true},{"id":60,"group":"ellos","verb":"decir","answer":"dirían","sentence":"Si supieran lo que pasó, ustedes _____ la verdad.","wrong":["decirían","diríamos"],"hard":true},{"id":61,"group":"nouns","verb":"comprar","answer":"compraría","sentence":"Con suficiente dinero, Maya _____ una bicicleta nueva.","wrong":["comprarían","compró"]},{"id":62,"group":"nouns","verb":"ir","answer":"iríamos","sentence":"Si tuviéramos un fin de semana libre, mi hermano y yo _____ a las montañas.","wrong":["irían","fuimos"]},{"id":63,"group":"nouns","verb":"comer","answer":"comerían","sentence":"Si tuvieran hambre después del partido, Ana y Mateo _____ pizza.","wrong":["comería","comieron"]},{"id":64,"group":"nouns","verb":"ganar","answer":"ganaría","sentence":"Con una defensa más fuerte, el equipo _____ más partidos.","wrong":["ganarían","ganó"]},{"id":65,"group":"nouns","verb":"escribir","answer":"escribirían","sentence":"Con más tiempo, los estudiantes _____ respuestas más detalladas.","wrong":["escribiría","escribieron"]},{"id":66,"group":"nouns","verb":"viajar","answer":"viajaría","sentence":"Si pudiera trabajar desde cualquier lugar, mi tía _____ mucho más.","wrong":["viajarían","viajó"]},{"id":67,"group":"nouns","verb":"poner","answer":"pondría","sentence":"Si hubiera una presentación, la profesora _____ las instrucciones en la pantalla.","wrong":["ponería","pondrían"],"hard":true},{"id":68,"group":"nouns","verb":"venir","answer":"vendrían","sentence":"Elena y su hermana dijeron que _____ después de la práctica.","wrong":["venirían","vendría"],"hard":true},{"id":69,"group":"nouns","verb":"poder","answer":"podrían","sentence":"Con las herramientas correctas, mis padres _____ arreglar la bicicleta.","wrong":["poderían","podría"],"hard":true},{"id":70,"group":"nouns","verb":"tener","answer":"tendría","sentence":"Con otro día para prepararse, Carlos _____ menos estrés.","wrong":["tenería","tendrían"],"hard":true},{"id":71,"group":"nouns","verb":"caber","answer":"cabría","sentence":"Sin tantos libros, la mochila _____ debajo del asiento.","wrong":["cabería","cabrían"],"hard":true},{"id":72,"group":"nouns","verb":"haber","answer":"habría","sentence":"Con menos nubes, _____ más estrellas visibles esta noche.","wrong":["habería","habrían"],"hard":true}];
 const irregularQuestions=questions.filter(q=>q.hard);
 const STORAGE={
-  best:"flappyVerbPreteriteBest_v3",
-  cumulative:"flappyVerbPreteriteCumulative_v3",
-  elite:"flappyVerbPreteriteElite_v3",
-  unlocks:"flappyVerbPreteriteUnlocks_v3",
-  equipped:"flappyVerbPreteriteEquipped_v3",
-  bundle:"flappyVerbPreteriteSave_v3"
+  best:"flappyVerbConditionalBest_v1",
+  cumulative:"flappyVerbConditionalCumulative_v1",
+  elite:"flappyVerbConditionalElite_v1",
+  unlocks:"flappyVerbConditionalUnlocks_v1",
+  equipped:"flappyVerbConditionalEquipped_v1",
+  bundle:"flappyVerbConditionalSave_v1"
 };
 const CUMULATIVE_TARGET=1000;
 const ELITE_TARGET=150;
 const cosmeticMilestones=[25,50,75,100,150,200,250,300,350,400,450,500,550,600,650,700,750,800,900,1000];
 function storageAvailable(){
   try{
-    const k="__flappyVerbPreteriteStorageTest__";
+    const k="__flappyVerbConditionalStorageTest__";
     localStorage.setItem(k,"1");
     localStorage.removeItem(k);
     return true;
@@ -284,53 +324,199 @@ function safeJSON(raw,fallback){
 }
 const savedBundle=safeJSON(safeGet(STORAGE.bundle),{});
 
-// PRETÉRITO EXCLUSIVE COSMETICS: "Cronoaventura"
-// A coherent adventure-through-time progression unique to this tense version.
+// CONDICIONAL EXCLUSIVE COSMETICS: "Noche de Octubre"
+// Progresses from autumn-night details to supernatural late-game effects.
 const cosmeticDefs=[
-  // 25 total: starter palette gives immediate personalization without feeling premium.
-  {id:"oceano",score:25,category:"color",name:"Océano",preview:"●"},
-  {id:"mandarina",score:25,category:"color",name:"Mandarina",preview:"●"},
-  {id:"menta",score:25,category:"color",name:"Menta",preview:"●"},
-  {id:"lavanda",score:25,category:"color",name:"Lavanda",preview:"●"},
-
-  // 50-100 total: recognizable adventurer silhouette and first motion reward.
-  {id:"panuelo_aventurero",score:50,category:"sombrero",name:"Pañuelo aventurero",preview:"◢"},
-  {id:"gafas_aviador",score:75,category:"gafas",name:"Gafas de aviador",preview:"◉"},
-  {id:"polvo_ruta",score:100,category:"estela",name:"Polvo de ruta",preview:"✦"},
-
-  // 150 total: richer earth-and-map palette.
-  {id:"cobre",score:150,category:"color",name:"Cobre",preview:"●"},
-  {id:"petroleo",score:150,category:"color",name:"Azul petróleo",preview:"●"},
-  {id:"borgona",score:150,category:"color",name:"Borgoña",preview:"●"},
-  {id:"crema",score:150,category:"color",name:"Crema",preview:"●"},
-
-  // 200-350 total: the bird becomes a full explorer build.
-  {id:"alas_pergamino",score:200,category:"alas",name:"Alas de pergamino",preview:"≋"},
-  {id:"brujula",score:250,category:"accesorio",name:"Brújula",preview:"✥"},
-  {id:"sombrero_explorador",score:300,category:"sombrero",name:"Sombrero explorador",preview:"▰"},
-  {id:"destellos_viaje",score:350,category:"efecto",name:"Destellos de viaje",preview:"✧"},
-
-  // 400 total: clear status reward.
-  {id:"cobre_pulido",score:400,category:"color",name:"Cobre pulido",preview:"●"},
-
-  // 450-650 total: advanced expedition / time-machine gear.
-  {id:"goggles_expedicion",score:450,category:"gafas",name:"Goggles de expedición",preview:"▣"},
-  {id:"estela_cronologica",score:500,category:"estela",name:"Estela cronológica",preview:"◌"},
-  {id:"alas_mecanicas",score:550,category:"alas",name:"Alas mecánicas",preview:"≋"},
-  {id:"reloj_bolsillo",score:600,category:"accesorio",name:"Reloj de bolsillo",preview:"◷"},
-  {id:"cometa_temporal",score:650,category:"estela",name:"Cometa temporal",preview:"☄"},
-
-  // 700-900 total: late-game chrononaut cosmetics.
-  {id:"casco_cronauta",score:700,category:"sombrero",name:"Casco crononauta",preview:"◒"},
-  {id:"portal_temporal",score:750,category:"efecto",name:"Portal temporal",preview:"◎"},
-  {id:"medianoche_estelar",score:800,category:"color",name:"Medianoche estelar",preview:"●"},
-  {id:"anillos_tiempo",score:900,category:"accesorio",name:"Anillos del tiempo",preview:"⊚"},
-
-  // 1000 total: layered cumulative capstone that still respects all equipped cosmetics.
-  {id:"crononauta_legendario",score:1000,category:"efecto",name:"Crononauta legendario",preview:"★"},
-
-  // ELITE: only a 150-point single run can unlock this exclusive effect.
-  {id:"fenix_temporal",score:null,elite:true,category:"efecto",name:"Fénix temporal",preview:"♛"}
+  {
+    "id": "carbon",
+    "score": 25,
+    "category": "color",
+    "name": "Carbón",
+    "preview": "●"
+  },
+  {
+    "id": "uva",
+    "score": 25,
+    "category": "color",
+    "name": "Uva nocturna",
+    "preview": "●"
+  },
+  {
+    "id": "azul_luna",
+    "score": 25,
+    "category": "color",
+    "name": "Azul luna",
+    "preview": "●"
+  },
+  {
+    "id": "calabaza",
+    "score": 25,
+    "category": "color",
+    "name": "Calabaza",
+    "preview": "●"
+  },
+  {
+    "id": "gorro_calabaza",
+    "score": 50,
+    "category": "sombrero",
+    "name": "Gorrito calabaza",
+    "preview": "●"
+  },
+  {
+    "id": "gafas_luna",
+    "score": 75,
+    "category": "gafas",
+    "name": "Gafas de luna",
+    "preview": "◉"
+  },
+  {
+    "id": "hojas_secas",
+    "score": 100,
+    "category": "estela",
+    "name": "Hojas secas",
+    "preview": "❧"
+  },
+  {
+    "id": "caramelo",
+    "score": 150,
+    "category": "color",
+    "name": "Caramelo",
+    "preview": "●"
+  },
+  {
+    "id": "cereza_oscura",
+    "score": 150,
+    "category": "color",
+    "name": "Cereza oscura",
+    "preview": "●"
+  },
+  {
+    "id": "niebla",
+    "score": 150,
+    "category": "color",
+    "name": "Niebla",
+    "preview": "●"
+  },
+  {
+    "id": "bosque",
+    "score": 150,
+    "category": "color",
+    "name": "Bosque",
+    "preview": "●"
+  },
+  {
+    "id": "alas_esqueleto",
+    "score": 200,
+    "category": "alas",
+    "name": "Alas de esqueleto",
+    "preview": "≋"
+  },
+  {
+    "id": "arana_amiga",
+    "score": 250,
+    "category": "accesorio",
+    "name": "Araña amiga",
+    "preview": "✣"
+  },
+  {
+    "id": "sombrero_bruja",
+    "score": 300,
+    "category": "sombrero",
+    "name": "Sombrero de bruja",
+    "preview": "▲"
+  },
+  {
+    "id": "luciernagas",
+    "score": 350,
+    "category": "efecto",
+    "name": "Luciérnagas",
+    "preview": "✦"
+  },
+  {
+    "id": "negro_terciopelo",
+    "score": 400,
+    "category": "color",
+    "name": "Negro terciopelo",
+    "preview": "●"
+  },
+  {
+    "id": "gafas_calabaza",
+    "score": 450,
+    "category": "gafas",
+    "name": "Gafas calabaza",
+    "preview": "▣"
+  },
+  {
+    "id": "rastro_niebla",
+    "score": 500,
+    "category": "estela",
+    "name": "Rastro de niebla",
+    "preview": "≈"
+  },
+  {
+    "id": "alas_fantasma",
+    "score": 550,
+    "category": "alas",
+    "name": "Alas fantasma",
+    "preview": "≋"
+  },
+  {
+    "id": "farolito",
+    "score": 600,
+    "category": "accesorio",
+    "name": "Farolito",
+    "preview": "▤"
+  },
+  {
+    "id": "mini_murcielagos",
+    "score": 650,
+    "category": "estela",
+    "name": "Mini murciélagos",
+    "preview": "⌁"
+  },
+  {
+    "id": "corona_hojas",
+    "score": 700,
+    "category": "sombrero",
+    "name": "Corona de hojas",
+    "preview": "♕"
+  },
+  {
+    "id": "aura_lunar",
+    "score": 750,
+    "category": "efecto",
+    "name": "Aura lunar",
+    "preview": "☾"
+  },
+  {
+    "id": "fantasma_palido",
+    "score": 800,
+    "category": "color",
+    "name": "Fantasma pálido",
+    "preview": "●"
+  },
+  {
+    "id": "luna_creciente",
+    "score": 900,
+    "category": "accesorio",
+    "name": "Luna creciente",
+    "preview": "☾"
+  },
+  {
+    "id": "senor_octubre",
+    "score": 1000,
+    "category": "efecto",
+    "name": "Señor de Octubre",
+    "preview": "★"
+  },
+  {
+    "id": "eclipse_total",
+    "score": null,
+    "elite": true,
+    "category": "efecto",
+    "name": "Eclipse total",
+    "preview": "♛"
+  }
 ];
 const categoryLabels={
   color:"Color",sombrero:"Sombrero",gafas:"Gafas",alas:"Alas",
@@ -340,12 +526,12 @@ const legacyUnlocks=safeJSON(safeGet(STORAGE.unlocks),[]);
 const bundleUnlocks=Array.isArray(savedBundle.unlocks)?savedBundle.unlocks:[];
 let unlocked=new Set([...legacyUnlocks,...bundleUnlocks]);
 const defaultEquipped={
-  color:"amarillo",sombrero:"ninguno",gafas:"ninguno",alas:"normales",
+  color:"carbon",sombrero:"ninguno",gafas:"ninguno",alas:"normales",
   estela:"ninguna",accesorio:"ninguno",efecto:"ninguno"
 };
 let equipped=Object.assign({},defaultEquipped,safeJSON(safeGet(STORAGE.equipped),{}),savedBundle.equipped||{});
 
-// Fresh v3 progression starts everyone from zero, while still validating
+// Fresh Conditional progression starts everyone from zero, while still validating
 // equipped IDs in case the browser contains malformed data.
 for(const cat of Object.keys(defaultEquipped)){
   const allowed=new Set([defaultEquipped[cat],...cosmeticDefs.filter(x=>x.category===cat).map(x=>x.id)]);
@@ -409,153 +595,225 @@ let lives=maxLives,lifeGraceUntil=0;
 let heartPickups=[];
 let heartMessage="",heartMessageUntil=0;
 
-// ------------------------------------------------------------
-// AUDIO: separate buses allow music ducking during quizzes.
-// ------------------------------------------------------------
-let audioCtx=null,musicBus=null,sfxBus=null;
-let musicEnabled=true,sfxEnabled=true,musicTimer=null,musicStep=0,musicCurrentMs=235;
+// Per-run class system. Class choice resets every new run.
+let selectedClass=null;
+let witchShieldUsed=false,ghostShieldUsed=false;
 
-const N={
- C3:130.81,D3:146.83,E3:164.81,F3:174.61,G3:196,A3:220,B3:246.94,
- C4:261.63,D4:293.66,E4:329.63,F4:349.23,G4:392,A4:440,B4:493.88,
- C5:523.25,D5:587.33,E5:659.25,F5:698.46,G5:783.99,A5:880,B5:987.77,
- C6:1046.5,D6:1174.66,E6:1318.51
+// Moon Fragment / Full Moon system. Three fragments trigger a 7-second scoring phase.
+let moonFragments=[];
+let moonFragmentCount=0;
+let moonPipesUntilSpawn=5+Math.floor(Math.random()*4);
+let fullMoonActive=false,fullMoonStartMs=0,fullMoonDurationMs=7000;
+let fullMoonPauseStarted=0,fullMoonSuspendedMs=0,fullMoonMessageUntil=0;
+
+// ------------------------------------------------------------
+// AUDIO: professional October pack generated with ElevenLabs.
+// Files are loaded from ./audio_october/ so the HTML and folder can
+// be deployed together on GitHub Pages or opened locally as a pair.
+// ------------------------------------------------------------
+let musicEnabled=true,sfxEnabled=true;
+let audioUnlocked=false;
+let musicDucked=false;
+let activeMusicIndex=0,currentMusicKey=null,musicFadeToken=0;
+
+const SFX_FILES={
+  ui_click:"audio_october/sfx/ui_click.mp3",
+  bat_flap:"audio_october/sfx/bat_flap.mp3",
+  pipe_pass:"audio_october/sfx/pipe_pass.mp3",
+  collision_hit:"audio_october/sfx/collision_hit.mp3",
+  question_open:"audio_october/sfx/question_open.mp3",
+  answer_correct:"audio_october/sfx/answer_correct.mp3",
+  answer_wrong:"audio_october/sfx/answer_wrong.mp3",
+  heart_lost:"audio_october/sfx/heart_lost.mp3",
+  heart_pickup:"audio_october/sfx/heart_pickup.mp3",
+  gold_pipe_appear:"audio_october/sfx/gold_pipe_appear.mp3",
+  jackpot_start:"audio_october/sfx/jackpot_start.mp3",
+  coin_collect:"audio_october/sfx/coin_collect.mp3",
+  mega_jackpot_start:"audio_october/sfx/mega_jackpot_start.mp3",
+  countdown_tick:"audio_october/sfx/countdown_tick.mp3",
+  cosmetic_unlock:"audio_october/sfx/cosmetic_unlock.mp3",
+  elite_unlock:"audio_october/sfx/elite_unlock.mp3",
+  prize_unlocked:"audio_october/sfx/prize_unlocked.mp3",
+  game_over:"audio_october/sfx/game_over.mp3",
+  night_ambience:"audio_october/sfx/night_ambience_loop.mp3"
 };
-const melody=[
- N.G5,null,N.E5,N.G5,null,N.A5,N.G5,N.E5, N.C5,N.E5,null,N.G5,N.E5,null,N.D5,null,
- N.A5,null,N.F5,N.A5,N.C6,N.A5,null,N.G5, N.E5,N.G5,N.E5,null,N.D5,N.E5,N.C5,null,
- N.G5,N.E5,null,N.G5,N.A5,null,N.C6,N.A5, N.G5,null,N.E5,N.D5,N.E5,N.G5,null,N.E5,
- N.F5,N.A5,null,N.C6,N.A5,N.G5,null,N.F5, N.D5,N.G5,N.B5,null,N.A5,N.G5,N.D5,null,
- N.C6,null,N.A5,N.C6,N.D6,N.C6,N.A5,null, N.B5,N.G5,N.B5,N.D6,null,N.B5,N.G5,null,
- N.A5,N.C6,null,N.A5,N.F5,N.A5,N.C6,null, N.G5,N.B5,N.D6,N.B5,N.A5,null,N.G5,null,
- N.E5,N.G5,N.C6,null,N.B5,N.A5,N.G5,N.E5, N.F5,null,N.A5,N.G5,N.E5,N.D5,N.E5,null,
- N.G5,N.E5,N.C5,N.E5,N.G5,N.A5,N.G5,N.E5, N.F5,N.E5,N.D5,null,N.G5,N.E5,N.C5,null
-];
-const chords=["C","C","F","G","C","Am","F","G","C","Em","F","G","C","Am","G","C"];
-const roots=[N.C3,N.C3,N.F3,N.G3,N.C3,N.A3,N.F3,N.G3,N.C3,N.E3,N.F3,N.G3,N.C3,N.A3,N.G3,N.C3];
-const chordTones={C:[N.C4,N.E4,N.G4],Am:[N.A3,N.C4,N.E4],F:[N.F3,N.A3,N.C4],G:[N.G3,N.B3,N.D4],Em:[N.E4,N.G4,N.B4]};
+const MUSIC_FILES={
+  menu:"audio_october/music/music_menu_october.mp3",
+  gameplay:"audio_october/music/music_gameplay_october.mp3",
+  jackpot:"audio_october/music/music_jackpot_october.mp3",
+  mega:"audio_october/music/music_mega_jackpot_october.mp3"
+};
+const SFX_VOLUME={
+  ui_click:.55,bat_flap:.48,pipe_pass:.54,collision_hit:.78,question_open:.68,
+  answer_correct:.80,answer_wrong:.78,heart_lost:.82,heart_pickup:.82,
+  gold_pipe_appear:.78,jackpot_start:.88,coin_collect:.48,mega_jackpot_start:.90,
+  countdown_tick:.58,cosmetic_unlock:.78,elite_unlock:.90,prize_unlocked:.92,
+  game_over:.78,night_ambience:.12
+};
+const SFX_VOICES={bat_flap:6,coin_collect:10,pipe_pass:5,countdown_tick:3,ui_click:3};
+const sfxPools=new Map(),sfxPoolCursor=new Map();
+
+const musicChannels=[new Audio(),new Audio()];
+musicChannels.forEach(a=>{a.loop=true;a.preload="auto";a.volume=0;if("preservesPitch" in a)a.preservesPitch=true;});
+const ambienceAudio=new Audio(SFX_FILES.night_ambience);
+ambienceAudio.loop=true;ambienceAudio.preload="auto";ambienceAudio.volume=SFX_VOLUME.night_ambience;
 
 function ensureAudio(){
-  if(!audioCtx){
-    audioCtx=new (window.AudioContext||window.webkitAudioContext)();
-    musicBus=audioCtx.createGain();sfxBus=audioCtx.createGain();
-    musicBus.gain.value=.72;sfxBus.gain.value=1;
-    musicBus.connect(audioCtx.destination);sfxBus.connect(audioCtx.destination);
+  audioUnlocked=true;
+  if(musicEnabled){
+    ambienceAudio.play().catch(()=>{});
+    setTimeout(()=>startMusic(),0);
   }
-  if(audioCtx.state==="suspended") audioCtx.resume();
-  return audioCtx;
+  return true;
+}
+function sfxPoolFor(key){
+  if(sfxPools.has(key))return sfxPools.get(key);
+  const count=SFX_VOICES[key]||2;
+  const arr=[];
+  for(let i=0;i<count;i++){
+    const a=new Audio(SFX_FILES[key]);a.preload="auto";arr.push(a);
+  }
+  sfxPools.set(key,arr);sfxPoolCursor.set(key,0);return arr;
+}
+function playSfx(key,vol=1){
+  if(!sfxEnabled||!SFX_FILES[key])return;
+  const pool=sfxPoolFor(key);
+  let a=pool.find(x=>x.paused||x.ended);
+  if(!a){
+    const idx=sfxPoolCursor.get(key)||0;a=pool[idx%pool.length];sfxPoolCursor.set(key,(idx+1)%pool.length);
+  }
+  try{a.pause();a.currentTime=0;}catch{}
+  a.volume=Math.max(0,Math.min(1,(SFX_VOLUME[key]??.75)*vol));
+  a.playbackRate=1;
+  a.play().catch(()=>{});
+}
+function desiredMusicKey(){
+  if(megaJackpotActive)return "mega";
+  if(jackpotActive)return "jackpot";
+  if(state==="playing"||state==="quiz")return "gameplay";
+  return "menu";
+}
+function musicRateFor(key){
+  if(key==="menu")return 1;
+  const base=1+.08*Math.min(score/130,1)+.02*Math.min(Math.max(score-130,0)/70,1);
+  if(key==="jackpot")return Math.min(1.06,1+(base-1)*.45);
+  if(key==="mega")return Math.min(1.08,1.02+(base-1)*.5);
+  return base;
+}
+function targetMusicMs(){return 235/musicRateFor("gameplay");}
+function musicBaseVolume(key){
+  const v={menu:.28,gameplay:.30,jackpot:.34,mega:.36}[key]??.30;
+  return v*(musicDucked?.38:1);
+}
+function applyMusicVolumes(durationMs=250){
+  const token=++musicFadeToken;
+  const active=musicChannels[activeMusicIndex];
+  // Defensive cleanup: a cancelled crossfade must never leave the old
+  // looping Jackpot/Mega channel playing underneath the active track.
+  musicChannels.forEach((a,i)=>{
+    if(i!==activeMusicIndex){
+      try{a.pause();a.volume=0;}catch{}
+    }
+  });
+  const target=musicEnabled?musicBaseVolume(currentMusicKey||desiredMusicKey()):0;
+  const start=active.volume,started=performance.now();
+  const step=()=>{
+    if(token!==musicFadeToken)return;
+    const t=Math.min(1,(performance.now()-started)/Math.max(1,durationMs));
+    active.volume=start+(target-start)*t;
+    if(t<1)requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+  ambienceAudio.volume=musicEnabled?(musicDucked?.055:.10):0;
+}
+function switchMusic(key,fadeMs=520){
+  if(!musicEnabled||!audioUnlocked||!MUSIC_FILES[key])return;
+  if(currentMusicKey===key){
+    const a=musicChannels[activeMusicIndex];
+    a.playbackRate=musicRateFor(key);
+    if(a.paused)a.play().catch(()=>{});
+    applyMusicVolumes(220);return;
+  }
+  const from=musicChannels[activeMusicIndex];
+  const nextIndex=1-activeMusicIndex,next=musicChannels[nextIndex];
+  try{next.pause();next.currentTime=0;}catch{}
+  next.src=MUSIC_FILES[key];next.loop=true;next.preload="auto";next.volume=0;next.playbackRate=musicRateFor(key);
+  if("preservesPitch" in next)next.preservesPitch=true;
+  next.play().catch(()=>{});
+  const fromStart=from.volume,toTarget=musicBaseVolume(key),started=performance.now();
+  const token=++musicFadeToken;
+  currentMusicKey=key;activeMusicIndex=nextIndex;
+  const fade=()=>{
+    if(token!==musicFadeToken)return;
+    const t=Math.min(1,(performance.now()-started)/Math.max(1,fadeMs));
+    from.volume=fromStart*(1-t);next.volume=toTarget*t;
+    if(t<1)requestAnimationFrame(fade);else{from.pause();from.volume=0;}
+  };
+  requestAnimationFrame(fade);
+}
+function updateMusicPlaybackRate(){
+  if(!currentMusicKey)return;
+  musicChannels[activeMusicIndex].playbackRate=musicRateFor(currentMusicKey);
 }
 function setMusicLevel(level,seconds=.28){
-  if(!audioCtx||!musicBus)return;
-  const t=audioCtx.currentTime;
-  musicBus.gain.cancelScheduledValues(t);
-  musicBus.gain.setValueAtTime(musicBus.gain.value,t);
-  musicBus.gain.linearRampToValueAtTime(level,t+seconds);
+  musicDucked=level<.5;applyMusicVolumes(seconds*1000);
 }
-function tone(freq,start,dur,vol=.03,type="square",destination="sfx",endFreq=null){
-  if(!freq)return;
-  const ac=ensureAudio(),o=ac.createOscillator(),g=ac.createGain();
-  o.type=type;o.frequency.setValueAtTime(freq,start);
-  if(endFreq)o.frequency.exponentialRampToValueAtTime(Math.max(20,endFreq),start+dur);
-  g.gain.setValueAtTime(.0001,start);g.gain.exponentialRampToValueAtTime(vol,start+.007);
-  g.gain.setValueAtTime(vol*.72,Math.max(start+.01,start+dur*.62));
-  g.gain.exponentialRampToValueAtTime(.0001,start+dur);
-  o.connect(g);g.connect(destination==="music"?musicBus:sfxBus);o.start(start);o.stop(start+dur+.02);
-}
-function noise(start,dur=.04,vol=.008,destination="sfx",highpass=4200){
-  const ac=ensureAudio(),len=Math.floor(ac.sampleRate*dur),b=ac.createBuffer(1,len,ac.sampleRate),d=b.getChannelData(0);
-  for(let i=0;i<len;i++)d[i]=Math.random()*2-1;
-  const s=ac.createBufferSource(),g=ac.createGain(),f=ac.createBiquadFilter();
-  f.type="highpass";f.frequency.value=highpass;s.buffer=b;
-  g.gain.setValueAtTime(vol,start);g.gain.exponentialRampToValueAtTime(.0001,start+dur);
-  s.connect(f);f.connect(g);g.connect(destination==="music"?musicBus:sfxBus);s.start(start);
-}
-function sfxFlap(){if(!sfxEnabled)return;const t=ensureAudio().currentTime;tone(520,t,.07,.065,"square","sfx",760);tone(260,t+.01,.07,.025,"square","sfx",390)}
-function sfxPass(){if(!sfxEnabled)return;const t=ensureAudio().currentTime;tone(660,t,.07,.07);tone(880,t+.07,.08,.07)}
-function sfxCorrect(){if(!sfxEnabled)return;const t=ensureAudio().currentTime;tone(523.25,t,.08,.065);tone(659.25,t+.08,.08,.065);tone(783.99,t+.16,.14,.075)}
-function sfxWrong(){if(!sfxEnabled)return;const t=ensureAudio().currentTime;tone(250,t,.16,.075,"square","sfx",150);noise(t+.02,.12,.018)}
-function sfxGameOver(){if(!sfxEnabled)return;const t=ensureAudio().currentTime;tone(392,t,.11,.065);tone(311.13,t+.11,.11,.065);tone(246.94,t+.22,.13,.065);tone(196,t+.35,.24,.075,"square","sfx",110)}
-function sfxStart(){if(!sfxEnabled)return;const t=ensureAudio().currentTime;tone(392,t,.06,.055);tone(523.25,t+.06,.06,.055);tone(659.25,t+.12,.10,.065)}
-function sfxGoldApproach(){
-  if(!sfxEnabled)return;
-  const t=ensureAudio().currentTime;
-  [0, .09, .18, .29].forEach((d,i)=>tone([880,1174.66,1318.51,1760][i],t+d,.12,.028,"triangle"));
-  noise(t+.02,.35,.008,"sfx",6500);
-}
-function sfxGoldPass(){
-  if(!sfxEnabled)return;
-  const t=ensureAudio().currentTime;
-  tone(523.25,t,.07,.06);tone(783.99,t+.07,.08,.065);tone(1046.5,t+.15,.14,.075);
-}
-function sfxJackpot(){
-  if(!sfxEnabled)return;
-  const t=ensureAudio().currentTime;
-  const notes=[659.25,783.99,1046.5,1318.51,1567.98,2093];
-  notes.forEach((f,i)=>tone(f,t+i*.075,.11,.065,"square"));
-  for(let i=0;i<12;i++){
-    const f=[1046.5,1318.51,1567.98][i%3];
-    tone(f,t+.48+i*.055,.07,.035,"triangle");
+function startMusic(){if(!musicEnabled||!audioUnlocked)return;switchMusic(desiredMusicKey());if(ambienceAudio.paused)ambienceAudio.play().catch(()=>{});}
+function stopBonusMusicChannels(){
+  for(const a of musicChannels){
+    const src=(a.currentSrc||a.src||"").toLowerCase();
+    if(src.includes("music_jackpot_october.mp3")||src.includes("music_mega_jackpot_october.mp3")){
+      try{a.pause();a.currentTime=0;a.volume=0;}catch{}
+    }
   }
 }
-function sfxMegaJackpot(){
-  if(!sfxEnabled)return;
-  const t=ensureAudio().currentTime;
-  [523.25,659.25,783.99,1046.5,1318.51,1567.98,2093].forEach((f,i)=>tone(f,t+i*.055,.13,.075,"square"));
-  for(let i=0;i<18;i++)tone([1046.5,1318.51,1567.98,2093][i%4],t+.42+i*.045,.08,.045,"triangle");
-  noise(t+.1,.8,.018,"sfx",9000);
+function stopMusic(){
+  musicFadeToken++;
+  musicChannels.forEach(a=>{a.pause();a.volume=0;});
+  currentMusicKey=null;
 }
-function targetMusicMs(){
-  let base;
-  if(score<=20)base=235/(1+0.014*Math.max(0,score));
-  else{
-    const at20=235/(1+0.014*20);
-    const t=Math.min((score-20)/180,1);
-    base=at20-18*t;
-  }
-  return megaJackpotActive?base*.88:base;
-}
-function playMusicStep(){
-  if(!musicEnabled||state==="ready"||state==="gameover")return;
-  const ac=ensureAudio(),start=ac.currentTime+.025,sec=musicCurrentMs/1000;
-  const i=musicStep%melody.length,m=melody[i],phrase=Math.floor(i/8)%chords.length;
-  if(m)tone(m,start,sec*.72,.021,"square","music");
-  if(i%2===1){
-    const tones=chordTones[chords[phrase]],h=tones[(Math.floor(i/2)+phrase)%3];
-    tone(h,start,sec*.9,.0075,"triangle","music");
-  }
-  if(i%2===0){
-    const pattern=[1,1.5,2,1.5];
-    tone(roots[phrase]*pattern[(i/2)%4|0],start,sec*1.4,.0115,"square","music");
-  }
-  if(i%8===0||i%8===4)tone(95,start,.055,.008,"square","music",48);
-  if(i%8===4)noise(start,.055,.0048,"music");
-  if(i%2===1)noise(start,.025,.0023,"music");
-  musicStep=(musicStep+1)%melody.length;
-}
-function scheduleMusic(){
-  if(musicTimer)clearTimeout(musicTimer);
-  if(!musicEnabled||state==="ready"||state==="gameover"){musicTimer=null;return}
-  const target=targetMusicMs();
-  musicCurrentMs+=(target-musicCurrentMs)*.10;
-  playMusicStep();
-  musicTimer=setTimeout(scheduleMusic,musicCurrentMs);
-}
-function startMusic(){if(!musicEnabled)return;ensureAudio();if(!musicTimer&&state!=="ready"&&state!=="gameover")scheduleMusic()}
-function stopMusic(){if(musicTimer){clearTimeout(musicTimer);musicTimer=null}}
-function duckMusic(){setMusicLevel(.32,.32)}        // ~45% of gameplay level .72
-function restoreMusic(){setMusicLevel(.72,.38)}
+function duckMusic(){musicDucked=true;applyMusicVolumes(320)}
+function restoreMusic(){musicDucked=false;startMusic();applyMusicVolumes(380)}
+
+function sfxFlap(){playSfx("bat_flap")}
+function sfxPass(){playSfx("pipe_pass")}
+function sfxCorrect(){playSfx("answer_correct")}
+function sfxWrong(){playSfx("answer_wrong")}
+function sfxGameOver(){playSfx("game_over")}
+function sfxStart(){playSfx("ui_click",.7)}
+function sfxGoldApproach(){playSfx("gold_pipe_appear")}
+function sfxGoldPass(){playSfx("question_open",.9)}
+function sfxQuestionOpen(){playSfx("question_open")}
+function sfxJackpot(){playSfx("jackpot_start")}
+function sfxMegaJackpot(){playSfx("mega_jackpot_start")}
+function sfxCountdown(){playSfx("countdown_tick")}
+function sfxUnlock(){playSfx("cosmetic_unlock")}
+function sfxEliteUnlock(){playSfx("elite_unlock")}
+function sfxPrizeUnlocked(){playSfx("prize_unlocked")}
+function sfxUiClick(){playSfx("ui_click")}
+
 function updateAudioButtons(){
   musicBtn.textContent=musicEnabled?"MÚSICA ✓":"MÚSICA ✕";
   sfxBtn.textContent=sfxEnabled?"SONIDOS ✓":"SONIDOS ✕";
 }
 musicBtn.addEventListener("click",e=>{
-  e.stopPropagation();musicEnabled=!musicEnabled;
-  if(musicEnabled){ensureAudio();startMusic();setMusicLevel(state==="quiz"?.32:.72,.2)}
-  else{stopMusic();setMusicLevel(0,.12)}
+  e.stopPropagation();ensureAudio();
+  musicEnabled=!musicEnabled;
+  if(musicEnabled){ambienceAudio.play().catch(()=>{});startMusic();applyMusicVolumes(220)}
+  else{stopMusic();ambienceAudio.pause();}
   updateAudioButtons();
 });
-sfxBtn.addEventListener("click",e=>{e.stopPropagation();sfxEnabled=!sfxEnabled;updateAudioButtons()});
+sfxBtn.addEventListener("click",e=>{e.stopPropagation();ensureAudio();if(sfxEnabled)sfxUiClick();sfxEnabled=!sfxEnabled;updateAudioButtons()});
 updateAudioButtons();
+
+// Browsers require a user gesture before audio can begin. The first click/key
+// unlocks the pack; the deferred music sync uses whichever game state that
+// gesture actually entered (menu, play, customize, etc.).
+function unlockProfessionalAudio(){
+  if(audioUnlocked)return;ensureAudio();setTimeout(()=>startMusic(),0);
+}
+window.addEventListener("pointerdown",unlockProfessionalAudio,{once:true,capture:true});
+window.addEventListener("keydown",unlockProfessionalAudio,{once:true,capture:true});
 
 // ------------------------------------------------------------
 // GOLD PIPE LOGIC
@@ -632,21 +890,15 @@ function updateProgressUI(){
   if(customBest)customBest.textContent=best;
   if(customTotal)customTotal.textContent=Math.min(cumulative,CUMULATIVE_TARGET);
 }
-function sfxUnlock(){
-  if(!sfxEnabled)return;
-  const t=ensureAudio().currentTime;
-  [523.25,659.25,783.99,1046.5].forEach((f,i)=>tone(f,t+i*.07,.10,.055,"square"));
-  tone(1567.98,t+.31,.18,.065,"triangle");
-}
 function rewardLabelForMilestone(points,items){
   const labels={
-    25:"Paleta de ruta",50:"Pañuelo aventurero",75:"Gafas de aviador",
-    100:"Polvo de ruta",150:"Paleta del atlas",200:"Alas de pergamino",
-    250:"Brújula",300:"Sombrero explorador",350:"Destellos de viaje",
-    400:"¡COBRE PULIDO!",450:"Goggles de expedición",500:"Estela cronológica",
-    550:"Alas mecánicas",600:"Reloj de bolsillo",650:"Cometa temporal",
-    700:"Casco crononauta",750:"Portal temporal",800:"Medianoche estelar",
-    900:"Anillos del tiempo",1000:"¡CRONAUTA LEGENDARIO!"
+    25:"Paleta de medianoche",50:"Gorrito calabaza",75:"Gafas de luna",
+    100:"Hojas secas",150:"Paleta de octubre",200:"Alas de esqueleto",
+    250:"Araña amiga",300:"Sombrero de bruja",350:"Luciérnagas",
+    400:"¡NEGRO TERCIOPELO!",450:"Gafas calabaza",500:"Rastro de niebla",
+    550:"Alas fantasma",600:"Farolito",650:"Mini murciélagos",
+    700:"Corona de hojas",750:"Aura lunar",800:"Fantasma pálido",
+    900:"Luna creciente",1000:"¡SEÑOR DE OCTUBRE!"
   };
   return labels[points] || (items.length===1?items[0].name:`${items.length} nuevos objetos`);
 }
@@ -672,7 +924,7 @@ function checkUnlocks(){
   return milestones.length;
 }
 function showUnlock(item){
-  sfxUnlock();
+  if(item.elite)sfxEliteUnlock();else sfxUnlock();
   const suffix=item.elite?"150 en una partida":`${item.score} puntos totales`;
   unlockToast.innerHTML=`¡NUEVO DESBLOQUEO!<br><span style="font-size:14px">${item.name}</span><br><span style="font-size:11px">${suffix}</span>`;
   unlockToast.classList.remove("show");
@@ -680,7 +932,7 @@ function showUnlock(item){
   unlockToast.classList.add("show");
 }
 function showEliteUnlock(){
-  showUnlock({name:"FÉNIX TEMPORAL · ELITE",elite:true});
+  showUnlock({name:"ECLIPSE TOTAL · ELITE",elite:true});
 }
 function isUnlocked(id){
   const item=cosmeticDefs.find(x=>x.id===id);
@@ -690,15 +942,17 @@ function isUnlocked(id){
 }
 function addPoints(n){
   if(!Number.isFinite(n)||n<=0)return;
+  const prizeWasUnlocked=(cumulative>=CUMULATIVE_TARGET&&eliteEarned);
   score+=n;
   cumulative+=n;
   syncPhysicalDifficultyToScore();
+  updateMusicPlaybackRate();
   if(score>best)best=score;
 
   let eliteJustEarned=false;
   if(score>=ELITE_TARGET&&!eliteEarned){
     eliteEarned=true;
-    unlocked.add("fenix_temporal");
+    unlocked.add("eclipse_total");
     eliteJustEarned=true;
   }
 
@@ -706,14 +960,18 @@ function addPoints(n){
   saveProgress();
   const standardUnlockCount=checkUnlocks();
   if(eliteJustEarned)setTimeout(showEliteUnlock,standardUnlockCount?1900:0);
+  const prizeNowUnlocked=(cumulative>=CUMULATIVE_TARGET&&eliteEarned);
+  if(!prizeWasUnlocked&&prizeNowUnlocked){
+    const delay=(standardUnlockCount?1900:0)+(eliteJustEarned?2600:650);
+    setTimeout(sfxPrizeUnlocked,delay);
+  }
   updateProgressUI();
 }
 function cosmeticPreviewColor(id){
   const map={
-    amarillo:"#f3d53c",
-    oceano:"#2f92b8",mandarina:"#f28a2e",menta:"#65c9a5",lavanda:"#9d82d9",
-    cobre:"#b86d3d",petroleo:"#256b73",borgona:"#7f3348",crema:"#ead8ad",
-    cobre_pulido:"#d98a49",medianoche_estelar:"#202846"
+    carbon:"#3a3542",uva:"#704f8e",azul_luna:"#5778a8",calabaza:"#d96d2b",
+    caramelo:"#c9903c",cereza_oscura:"#7a2d43",niebla:"#9ba0ad",bosque:"#3e6b53",
+    negro_terciopelo:"#18141f",fantasma_palido:"#c9c8d4"
   };
   return map[id]||null;
 }
@@ -722,7 +980,7 @@ function buildCustomizer(){
   customGrid.innerHTML="";
   const cats=["color","sombrero","gafas","alas","estela","accesorio","efecto"];
   const defaults={
-    color:[{id:"amarillo",name:"Amarillo",preview:"●"}],
+    color:[{id:"carbon",name:"Carbón",preview:"●"}],
     sombrero:[{id:"ninguno",name:"Ninguno",preview:"·"}],
     gafas:[{id:"ninguno",name:"Ningunas",preview:"·"}],
     alas:[{id:"normales",name:"Normales",preview:"≋"}],
@@ -757,7 +1015,7 @@ function buildCustomizer(){
       }
       if(!locked){
         btn.onclick=()=>{
-          equipped[cat]=item.id;saveEquipped();buildCustomizer();
+          sfxUiClick();equipped[cat]=item.id;saveEquipped();buildCustomizer();
         };
       }
       options.appendChild(btn);
@@ -775,9 +1033,22 @@ function bootstrapUnlocks(){
 }
 function showMainMenu(){
   updateProgressUI();
-  menuOverlay.style.display="flex";customizeOverlay.style.display="none";
+  selectedClass=null;
+  menuOverlay.style.display="flex";customizeOverlay.style.display="none";classOverlay.style.display="none";
+  if(audioUnlocked&&musicEnabled){musicDucked=false;switchMusic("menu",520);}
 }
 function hideMainMenu(){menuOverlay.style.display="none"}
+function showClassSelect(){
+  ensureAudio();sfxUiClick();
+  selectedClass=null;
+  menuOverlay.style.display="none";customizeOverlay.style.display="none";classOverlay.style.display="flex";
+}
+function startRunWithClass(which){
+  if(!["bruja","fantasma","vampiro"].includes(which))return;
+  selectedClass=which;
+  witchShieldUsed=false;ghostShieldUsed=false;
+  sfxUiClick();classOverlay.style.display="none";resetGame();flap();
+}
 
 // ------------------------------------------------------------
 // GAME STATE
@@ -785,12 +1056,14 @@ function hideMainMenu(){menuOverlay.style.display="none"}
 function resetGame(){
   bird.y=255;bird.vy=0;score=0;physicalScore=0;
   lives=maxLives;lifeGraceUntil=0;heartPickups=[];heartMessage="";heartMessageUntil=0;
+  witchShieldUsed=false;ghostShieldUsed=false;
+  moonFragments=[];moonFragmentCount=0;moonPipesUntilSpawn=5+Math.floor(Math.random()*4);
+  fullMoonActive=false;fullMoonStartMs=0;fullMoonPauseStarted=0;fullMoonSuspendedMs=0;fullMoonMessageUntil=0;
   jackpotActive=false;megaJackpotActive=false;jackpotStartMs=0;jackpotGraceUntil=0;jackpotCoins=[];
   jackpotDurationMs=10000;jackpotCoinSchedule=[];jackpotQuizPauseStarted=0;
   jackpotCountdownPulse=0;jackpotImpactFlash=0;
   pipes=[];state="ready";activePipe=null;currentQuestion=null;currentQuizIsGold=false;currentQuizWasDuringJackpot=false;
-  totalPassed=0;totalGenerated=0;normalGenerated=0;goldProgressPassed=0;goldCooldownPipes=0;jackpotGoldSpawned=false;questionDeck=[];hardQuestionDeck=[];lastMainQuestionId=null;lastHardQuestionId=null;closeQuiz();stopMusic();musicStep=0;musicCurrentMs=235;
-  if(audioCtx&&musicBus)musicBus.gain.value=.72;celebration.classList.remove("play");celebration.style.display="none";
+  totalPassed=0;totalGenerated=0;normalGenerated=0;goldProgressPassed=0;goldCooldownPipes=0;jackpotGoldSpawned=false;questionDeck=[];hardQuestionDeck=[];lastMainQuestionId=null;lastHardQuestionId=null;closeQuiz();stopMusic();musicDucked=false;jackpotCountdownPulse=0;celebration.classList.remove("play");celebration.style.display="none";
   const firstX=680;
   for(let i=0;i<4;i++)addPipe(firstX+i*pipeSpacing,i===0?null:pipes[i-1]);
 }
@@ -814,6 +1087,7 @@ function addPipe(x,prev=null){
   const pipe={x,topH,passed:false,gold,isVerb,question,announced:false,lastSparkle:0,goldFromJackpot:Boolean(gold&&jackpotActive)};
   pipes.push(pipe);
   maybeSpawnHeart(prev,pipe);
+  maybeSpawnMoonFragment(prev,pipe);
 }
 function heartOverlapsPipeAt(x,y,r=17){
   const box={x:x-r,y:y-r,w:r*2,h:r*2};
@@ -827,8 +1101,9 @@ function heartOverlapsPipeAt(x,y,r=17){
   return false;
 }
 function maybeSpawnHeart(prev,newPipe){
-  // 1% chance per newly generated pipe, only when a heart can actually help.
-  if(jackpotActive||lives>=maxLives||heartPickups.length>0||!prev||Math.random()>=.01)return;
+  // Vampiro doubles the heart opportunity from 1% to 2%.
+  const heartChance=selectedClass==="vampiro"?.02:.01;
+  if(jackpotActive||lives>=maxLives||heartPickups.length>0||!prev||Math.random()>=heartChance)return;
 
   // Place the heart in the open horizontal lane BETWEEN two pipe columns.
   // This keeps the pickup completely off the pipe bodies.
@@ -846,22 +1121,67 @@ function maybeSpawnHeart(prev,newPipe){
   for(let i=0;i<8&&heartOverlapsPipeAt(x,y);i++){
     y=70+Math.random()*(H-GROUND_H-140);
   }
-  if(heartOverlapsPipeAt(x,y))return;
+  if(heartOverlapsPipeAt(x,y)||moonFragmentOverlapsPickup(x,y,17))return;
 
   heartPickups.push({x,y,r:16,collected:false,phase:Math.random()*Math.PI*2});
 }
-function sfxHeartPickup(){
-  if(!sfxEnabled)return;
-  const t=ensureAudio().currentTime;
-  tone(659.25,t,.07,.06,"triangle");
-  tone(880,t+.07,.08,.065,"triangle");
-  tone(1318.51,t+.15,.13,.07,"triangle");
+function moonFragmentOverlapsPickup(x,y,r=15){
+  for(const h of heartPickups)if(Math.hypot(x-h.x,y-h.y)<r+h.r+18)return true;
+  for(const m of moonFragments)if(Math.hypot(x-m.x,y-m.y)<r+m.r+18)return true;
+  return false;
 }
-function sfxHeartLost(){
-  if(!sfxEnabled)return;
-  const t=ensureAudio().currentTime;
-  tone(330,t,.09,.06,"square","sfx",250);
-  tone(220,t+.10,.16,.065,"square","sfx",150);
+function maybeSpawnMoonFragment(prev,newPipe){
+  if(!prev||state!=="playing"||jackpotActive||fullMoonActive||moonFragments.length>0)return;
+  moonPipesUntilSpawn--;
+  if(moonPipesUntilSpawn>0)return;
+  moonPipesUntilSpawn=5+Math.floor(Math.random()*4);
+
+  const left=prev.x+pipeWidth+38,right=newPipe.x-38;
+  if(right-left<80)return;
+  const x=left+(right-left)*(.36+Math.random()*.28);
+  const gap=difficultyForScore(score).gap;
+  const center=((prev.topH+gap/2)+(newPipe.topH+gap/2))/2;
+  let y=Math.max(72,Math.min(H-GROUND_H-58,center+(Math.random()-.5)*62));
+  for(let i=0;i<10&&(heartOverlapsPipeAt(x,y,15)||moonFragmentOverlapsPickup(x,y,15));i++){
+    y=72+Math.random()*(H-GROUND_H-144);
+  }
+  if(heartOverlapsPipeAt(x,y,15)||moonFragmentOverlapsPickup(x,y,15))return;
+  moonFragments.push({x,y,r:15,collected:false,phase:Math.random()*Math.PI*2});
+}
+function startFullMoon(){
+  fullMoonActive=true;fullMoonStartMs=performance.now();fullMoonPauseStarted=0;fullMoonSuspendedMs=0;
+  fullMoonMessageUntil=performance.now()+1800;
+  moonFragmentCount=0;moonFragments=[];
+  playSfx("cosmetic_unlock",.72);
+}
+function fullMoonElapsed(now){const currentPause=fullMoonPauseStarted?Math.max(0,now-fullMoonPauseStarted):0;return fullMoonActive?Math.max(0,now-fullMoonStartMs-fullMoonSuspendedMs-currentPause):0}
+function fullMoonRemaining(now){return Math.max(0,fullMoonDurationMs-fullMoonElapsed(now))}
+function pauseFullMoonTimer(){if(fullMoonActive&&!fullMoonPauseStarted)fullMoonPauseStarted=performance.now()}
+function resumeFullMoonTimer(){
+  if(!fullMoonPauseStarted)return;
+  fullMoonSuspendedMs+=Math.max(0,performance.now()-fullMoonPauseStarted);fullMoonPauseStarted=0;
+}
+function suspendFullMoonForJackpot(){pauseFullMoonTimer();moonFragments=[]}
+function resumeFullMoonAfterJackpot(){resumeFullMoonTimer()}
+function updateMoonFragments(dt,speed,now){
+  const f=Math.min(dt/16.6667,2),bx=bird.x+bird.w/2,by=bird.y+bird.h/2;
+  if(!jackpotActive){
+    for(const m of moonFragments){
+      m.x-=speed*f;
+      if(Math.hypot(bx-m.x,by-m.y)<m.r+18){
+        m.collected=true;moonFragmentCount=Math.min(3,moonFragmentCount+1);playSfx("coin_collect",.75);
+        if(moonFragmentCount>=3)startFullMoon();
+      }
+    }
+  }
+  moonFragments=moonFragments.filter(m=>!m.collected&&m.x>-50);
+  if(fullMoonActive&&!fullMoonPauseStarted&&fullMoonElapsed(now)>=fullMoonDurationMs){
+    fullMoonActive=false;fullMoonStartMs=0;fullMoonSuspendedMs=0;moonPipesUntilSpawn=5+Math.floor(Math.random()*4);
+  }
+}
+function sfxHeartPickup(){playSfx("heart_pickup")
+}
+function sfxHeartLost(){playSfx("heart_lost")
 }
 function showHeartMessage(text){
   heartMessage=text;
@@ -881,14 +1201,18 @@ function safeRespawn(){
   bird.vy=0;
   lifeGraceUntil=performance.now()+2000;
 }
+function consumeGhostProtection(){
+  if(selectedClass!=="fantasma"||ghostShieldUsed)return false;
+  ghostShieldUsed=true;playSfx("heart_pickup",.7);safeRespawn();showHeartMessage("👻 PROTECCIÓN");state="playing";restoreMusic();startMusic();return true;
+}
 function loseHeart(){
   if(lives<=0)return;
   lives--;
-  sfxHeartLost();
   if(lives<=0){
     gameOver();
     return;
   }
+  sfxHeartLost();
   safeRespawn();
   showHeartMessage("♥ -1");
   state="playing";
@@ -949,13 +1273,14 @@ function renderChoices(){
 function openQuiz(pipe){
   currentQuizWasDuringJackpot=Boolean(pipe.gold&&jackpotActive);
   if(currentQuizWasDuringJackpot)jackpotQuizPauseStarted=performance.now();
+  pauseFullMoonTimer();
   state="quiz";activePipe=pipe;currentQuizIsGold=pipe.gold;quizLocked=false;
   currentQuestion=pipe.question || chooseQuestion(pipe.gold);
   currentChoices=shuffleChoices([currentQuestion.answer,...currentQuestion.wrong]);
   quizCard.classList.toggle("gold",pipe.gold);
   document.getElementById("quizTitle").textContent=currentQuizWasDuringJackpot
     ?"¡DESAFÍO MEGA JACKPOT!"
-    :(pipe.gold?"¡DESAFÍO JACKPOT!":"¡EL PRETÉRITO!");
+    :(pipe.gold?"¡DESAFÍO JACKPOT!":"¡EL CONDICIONAL!");
   promptEl.textContent=currentQuestion.sentence;
   verbHintEl.textContent=`Infinitivo: ${currentQuestion.verb}`;
   feedbackEl.textContent="";attemptsEl.textContent="Una oportunidad";
@@ -964,7 +1289,7 @@ function openQuiz(pipe){
     :(pipe.gold?"JACKPOT: elige la forma correcta. Haz clic o usa 1, 2, 3.":"Elige la forma correcta. Haz clic o usa las teclas 1, 2, 3.");
   renderChoices();overlay.style.display="flex";
   duckMusic();
-  if(pipe.gold)sfxGoldPass();else sfxPass();
+  sfxQuestionOpen();
 }
 function closeQuiz(){
   overlay.style.display="none";quizCard.classList.remove("gold");
@@ -996,16 +1321,7 @@ function showJackpotCelebration(mega=false){
   requestAnimationFrame(()=>celebration.classList.add("play"));
   setTimeout(()=>{celebration.classList.remove("play");celebration.style.display="none"},2400);
 }
-function sfxCoin(value){
-  if(!sfxEnabled)return;
-  const t=ensureAudio().currentTime;
-  if(value===1){
-    tone(988,t,.055,.045,"square");tone(1318.51,t+.045,.07,.04,"triangle");
-  }else if(value===3){
-    tone(784,t,.06,.05);tone(1046.5,t+.055,.06,.055);tone(1567.98,t+.11,.09,.055);
-  }else{
-    tone(659.25,t,.065,.055);tone(988,t+.055,.065,.06);tone(1318.51,t+.11,.07,.065);tone(1975.53,t+.17,.13,.07);
-  }
+function sfxCoin(value){playSfx("coin_collect")
 }
 function addCoin(x,y){
   jackpotCoins.push({x,y,value:1,r:12,collected:false,phase:Math.random()*Math.PI*2});
@@ -1068,13 +1384,14 @@ function scheduleCoinWaves(totalCoins,startElapsed=0,windowMs=6000){
 }
 function startJackpot(){
   const now=performance.now();
+  suspendFullMoonForJackpot();
   jackpotActive=true;megaJackpotActive=false;jackpotGoldSpawned=false;jackpotStartMs=now;jackpotGraceUntil=0;
   jackpotDurationMs=10000;jackpotCoins=[];jackpotCoinSchedule=[];
   jackpotCoinTarget=22+Math.floor(Math.random()*5); // 22-26 coins in a normal jackpot
   jackpotCoinsSpawned=0;
   scheduleCoinWaves(jackpotCoinTarget,0,6000);
   showJackpotCelebration(false);sfxJackpot();
-  restoreMusic();
+  musicDucked=false;switchMusic("jackpot",420);
 }
 function triggerMegaJackpot(){
   if(!jackpotActive){startJackpot();return;}
@@ -1093,7 +1410,7 @@ function triggerMegaJackpot(){
   const waveWindow=Math.max(2200,Math.min(4200,actuallyAdded*.6||2200));
   scheduleCoinWaves(phaseCoins,elapsed,waveWindow);
 
-  showJackpotCelebration(true);sfxMegaJackpot();restoreMusic();
+  showJackpotCelebration(true);sfxMegaJackpot();musicDucked=false;switchMusic("mega",340);
 }
 function jackpotElapsed(now){return jackpotActive?now-jackpotStartMs:0}
 function jackpotRemaining(now){return Math.max(0,jackpotDurationMs-jackpotElapsed(now))}
@@ -1118,6 +1435,11 @@ function endJackpot(now){
   jackpotGraceUntil=now+jackpotGraceMs;
   jackpotCoins=[];jackpotCoinSchedule=[];
   syncPhysicalDifficultyToScore();
+  resumeFullMoonAfterJackpot();
+  // End bonus music immediately, then return to gameplay music. This avoids
+  // a cancelled crossfade leaving the looping Jackpot track orphaned.
+  stopBonusMusicChannels();
+  if(audioUnlocked&&musicEnabled){musicDucked=false;switchMusic("gameplay",520);}
 }
 function isCollisionProtected(now){
   return jackpotActive || now<jackpotGraceUntil || now<lifeGraceUntil;
@@ -1181,6 +1503,7 @@ function submitChoice(index){
     if(!wonGold)updateProgressUI();
     setTimeout(()=>{
       if(wasMegaAttempt)resumeJackpotTimerFromQuiz();
+      if(!wonGold&&!jackpotActive)resumeFullMoonTimer();
       closeQuiz();activePipe=null;currentQuestion=null;currentQuizIsGold=false;currentQuizWasDuringJackpot=false;
       state="playing";restoreMusic();startMusic();
       if(wonGold){
@@ -1195,10 +1518,18 @@ function submitChoice(index){
     feedbackEl.textContent=`Incorrecto. Respuesta: ${currentQuestion.answer}`;
     attemptsEl.textContent=lives>1?"Pierdes 1 corazón":"Último corazón";
     sfxWrong();
+    const witchProtected=selectedClass==="bruja"&&!witchShieldUsed;
+    if(witchProtected){
+      witchShieldUsed=true;
+      attemptsEl.textContent="Protección mágica: no pierdes corazón";
+    }
     setTimeout(()=>{
       if(wasMegaAttempt)resumeJackpotTimerFromQuiz();
+      if(!jackpotActive)resumeFullMoonTimer();
       closeQuiz();activePipe=null;currentQuestion=null;currentQuizIsGold=false;currentQuizWasDuringJackpot=false;
-      state="playing";restoreMusic();startMusic();loseHeart();
+      state="playing";restoreMusic();startMusic();
+      if(witchProtected){playSfx("heart_pickup",.7);showHeartMessage("🧙 PROTECCIÓN");}
+      else loseHeart();
     },1500);
   }
 }
@@ -1209,7 +1540,7 @@ function returnToMenuFromGameOver(){
 function gameOver(){
   if(state==="quiz"||state==="gameover")return;
   state="gameover";bird.vy=0;stopMusic();sfxGameOver();
-  setTimeout(()=>{if(state==="gameover")showMainMenu()},900);
+  setTimeout(()=>{if(state==="gameover")showMainMenu()},1350);
 }
 
 function update(dt,now){
@@ -1220,7 +1551,18 @@ function update(dt,now){
   }
   if(state!=="playing")return;
 
-  if(jackpotActive && jackpotElapsed(now)>=jackpotDurationMs)endJackpot(now);
+  if(jackpotActive){
+    const rem=jackpotRemaining(now);
+    if(rem>0&&rem<=3000){
+      const n=Math.max(1,Math.ceil(rem/1000));
+      if(n!==jackpotCountdownPulse){jackpotCountdownPulse=n;sfxCountdown();}
+    }else jackpotCountdownPulse=0;
+    if(jackpotElapsed(now)>=jackpotDurationMs)endJackpot(now);
+  }
+
+  if(fullMoonActive&&!fullMoonPauseStarted&&fullMoonElapsed(now)>=fullMoonDurationMs){
+    fullMoonActive=false;fullMoonStartMs=0;fullMoonSuspendedMs=0;moonPipesUntilSpawn=5+Math.floor(Math.random()*4);
+  }
 
   const d=difficultyForScore(score);
   physicalScore=score;
@@ -1262,8 +1604,8 @@ function update(dt,now){
         // Gold pipes always quiz. Every third non-gold pipe is a verb pipe.
         openQuiz(p);return;
       }else{
-        // Ordinary pipes keep the flight flowing and are worth +1.
-        addPoints(1);sfxPass();
+        // Full Moon doubles ordinary pipe value without changing verb scoring.
+        addPoints(fullMoonActive?2:1);sfxPass();
       }
     }
 
@@ -1271,7 +1613,7 @@ function update(dt,now){
       if(isCollisionProtected(now)){
         if(now-jackpotImpactFlash>120)jackpotImpactFlash=now;
       }else{
-        loseHeart();return;
+        playSfx("collision_hit");if(consumeGhostProtection())return;loseHeart();return;
       }
     }
   }
@@ -1283,12 +1625,13 @@ function update(dt,now){
       if(bird.y<0){bird.y=0;bird.vy=Math.max(0,bird.vy)}
       if(bird.y+bird.h>H-GROUND_H){bird.y=H-GROUND_H-bird.h;bird.vy=Math.min(0,bird.vy)}
     }else if(bird.y<-8||bird.y+bird.h>H-GROUND_H){
-      loseHeart();return;
+      playSfx("collision_hit");if(consumeGhostProtection())return;loseHeart();return;
     }
   }
 
   updateCoins(dt,now,speed);
   updateHearts(dt,speed);
+  updateMoonFragments(dt,speed,now);
 
   if(pipes.length&&pipes[0].x+pipeWidth<-30){
     pipes.shift();
@@ -1306,21 +1649,48 @@ function drawCloud(x,y,s){
   pxRect(wrapX,y,72*s,18*s,"#e8fbf5");pxRect(wrapX+16*s,y-16*s,46*s,20*s,"#e8fbf5");pxRect(wrapX+54*s,y+4*s,36*s,14*s,"#d9f1ec");
 }
 function drawSky(){
-  ctx.fillStyle="#70c5ce";ctx.fillRect(0,0,W,H);
-  [{x:110-cloudOffset,y:105,s:1},{x:500-cloudOffset*.8,y:70,s:1.25},{x:850-cloudOffset*.6,y:150,s:.9},{x:1170-cloudOffset,y:110,s:1}]
-    .forEach(c=>drawCloud(c.x,c.y,c.s));
-  for(let x=-20;x<W+30;x+=48){
-    const h=35+(((x/48)%3+3)%3)*10;pxRect(x,H-GROUND_H-h,34,h,"#9bd88f");pxRect(x+8,H-GROUND_H-h-13,18,13,"#b7e8a4");
+  // Layered pixel-night sky. No random positions, so the scene stays calm and readable.
+  pxRect(0,0,W,H,"#0c1330");
+  pxRect(0,220,W,H-220,"#111a37");
+  pxRect(0,360,W,H-360,"#18203c");
+  const t=performance.now();
+  const stars=[[70,68],[135,128],[205,48],[292,92],[365,55],[430,145],[515,78],[590,120],[665,42],[735,160],[835,63],[905,115]];
+  stars.forEach((s,i)=>{
+    const glow=((Math.sin(t/520+i*1.7)+1)/2)>.55?"#fff0ba":"#8d95ba";
+    pxRect(s[0],s[1],i%3===0?4:3,i%3===0?4:3,glow);
+  });
+  // The moon becomes much larger and brighter during LUNA LLENA.
+  ctx.save();
+  const moonR=fullMoonActive?82:52;
+  if(fullMoonActive){ctx.shadowBlur=38;ctx.shadowColor="#fff3b0";}
+  ctx.fillStyle=fullMoonActive?"#fff3bf":"#f3deb0";ctx.beginPath();ctx.arc(790,105,moonR,0,Math.PI*2);ctx.fill();
+  ctx.shadowBlur=0;ctx.fillStyle="#c9b98f";ctx.globalAlpha=.25;ctx.beginPath();ctx.arc(772,92,11,0,Math.PI*2);ctx.fill();ctx.beginPath();ctx.arc(808,118,8,0,Math.PI*2);ctx.fill();ctx.restore();
+  const drift=cloudOffset*.35;
+  [[150-drift,155,1],[520-drift*.7,120,.8],[1030-drift,175,1.15]].forEach(c=>{
+    const x=((c[0]%(W+300))+(W+300))%(W+300)-150,y=c[1],s=c[2];
+    pxRect(x,y,85*s,14*s,"#252b49");pxRect(x+18*s,y-12*s,50*s,16*s,"#252b49");
+  });
+  // Distant rolling hills / rooftops.
+  ctx.save();ctx.fillStyle="#0a0d1b";ctx.beginPath();ctx.moveTo(0,H-GROUND_H);
+  for(let x=0;x<=W;x+=80){ctx.lineTo(x,H-GROUND_H-38-(x/80%3)*12)}
+  ctx.lineTo(W,H-GROUND_H);ctx.closePath();ctx.fill();ctx.restore();
+  // Bare-tree silhouettes.
+  for(let x=35;x<W;x+=150){
+    const base=H-GROUND_H;pxRect(x,base-66,8,66,"#090b14");pxRect(x-14,base-58,24,6,"#090b14");pxRect(x+4,base-48,27,6,"#090b14");pxRect(x-7,base-75,6,24,"#090b14");
   }
 }
 function drawNormalBody(x,y,w,h){
   if(h<=0)return;
-  pxRect(x,y,w,h,"#2f9f2f");pxRect(x+6,y,w-12,h,"#58c93f");pxRect(x+10,y,10,h,"#8ee65d");pxRect(x+w-15,y,8,h,"#1f7624");
-  ctx.strokeStyle="#174c1b";ctx.lineWidth=4;ctx.strokeRect(Math.round(x),Math.round(y),Math.round(w),Math.round(h));
+  pxRect(x,y,w,h,"#24283b");pxRect(x+5,y,w-10,h,"#3b4058");pxRect(x+10,y,9,h,"#555d78");pxRect(x+w-15,y,8,h,"#191d2c");
+  for(let yy=y+18;yy<y+h;yy+=24)pxRect(x+6,yy,w-12,3,"#202437");
+  for(let yy=y+28;yy<y+h;yy+=48)pxRect(x+Math.floor(w*.48),yy,3,18,"#202437");
+  ctx.strokeStyle="#111421";ctx.lineWidth=4;ctx.strokeRect(Math.round(x),Math.round(y),Math.round(w),Math.round(h));
 }
 function drawNormalCap(x,y,w,h){
-  pxRect(x,y,w,h,"#2f9f2f");pxRect(x+5,y+4,w-10,h-8,"#58c93f");pxRect(x+10,y+5,11,h-10,"#8ee65d");pxRect(x+w-18,y+4,9,h-8,"#1f7624");
-  ctx.strokeStyle="#174c1b";ctx.lineWidth=4;ctx.strokeRect(Math.round(x),Math.round(y),Math.round(w),Math.round(h));
+  pxRect(x,y,w,h,"#202438");pxRect(x+5,y+4,w-10,h-8,"#454b65");pxRect(x+10,y+5,10,h-10,"#626b87");pxRect(x+w-18,y+4,9,h-8,"#171a29");
+  // October-orange seam keeps the obstacle readable against the night.
+  pxRect(x+7,y+h-7,w-14,3,"#bd5d2d");
+  ctx.strokeStyle="#111421";ctx.lineWidth=4;ctx.strokeRect(Math.round(x),Math.round(y),Math.round(w),Math.round(h));
 }
 function goldPalettePhase(){
   return (Math.sin(performance.now()/180)+1)/2;
@@ -1359,7 +1729,7 @@ function drawVerbLabel(p,gap){
   const x=Math.round(p.x),labelW=pipeWidth+34,labelH=34;
   const labelX=x-17,labelY=Math.max(8,p.topH-38-labelH-7);
   ctx.save();
-  ctx.fillStyle=p.gold?"#fff0a0":"#ffe0bd";
+  ctx.fillStyle=p.gold?"#fff0a0":"#f1c596";
   ctx.strokeStyle="#151515";
   ctx.lineWidth=4;
   ctx.fillRect(labelX,labelY,labelW,labelH);
@@ -1398,11 +1768,49 @@ function drawCoins(){
     const pulse=1+.10*Math.sin(performance.now()/110+c.phase);
     const r=c.r*pulse;
     ctx.save();ctx.translate(c.x,c.y);
-    ctx.fillStyle="#f5bd2d";ctx.strokeStyle="#8c5b00";ctx.lineWidth=4;
+    ctx.fillStyle="#e9782f";ctx.strokeStyle="#6f3218";ctx.lineWidth=4;
     ctx.beginPath();ctx.arc(0,0,r,0,Math.PI*2);ctx.fill();ctx.stroke();
-    ctx.fillStyle="#8c5b00";ctx.textAlign="center";ctx.textBaseline="middle";
-    ctx.font='900 14px Arial';ctx.fillText("1",0,1);
+    ctx.strokeStyle="#f4a35d";ctx.lineWidth=2;
+    ctx.beginPath();ctx.arc(-4,0,r*.55,-1.25,1.25);ctx.stroke();ctx.beginPath();ctx.arc(4,0,r*.55,1.9,4.35);ctx.stroke();
+    pxRect(-2,-r-5,4,6,"#5b742d");
+    ctx.fillStyle="#3a1a16";ctx.font='900 10px Arial';ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillText("+1",0,1);
     ctx.restore();
+  }
+}
+function drawMoonFragments(){
+  const now=performance.now();
+  for(const m of moonFragments){
+    const pulse=1+.08*Math.sin(now/150+m.phase);
+    ctx.save();ctx.translate(m.x,m.y);ctx.scale(pulse,pulse);ctx.shadowBlur=12;ctx.shadowColor="#fff0a5";
+    ctx.fillStyle="#ffe7a0";ctx.beginPath();ctx.arc(0,0,13,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle="#18203c";ctx.beginPath();ctx.arc(5,-3,12,0,Math.PI*2);ctx.fill();
+    ctx.restore();
+  }
+}
+function drawMoonMeter(){
+  if(!(state==="playing"||state==="quiz"))return;
+  const x=W-190,y=H-GROUND_H+28;
+  ctx.save();ctx.textAlign="left";ctx.textBaseline="middle";ctx.font='900 14px "Courier New",monospace';ctx.lineWidth=4;ctx.strokeStyle="#111";
+  const label=fullMoonActive?`LUNA LLENA ${Math.ceil(fullMoonRemaining(performance.now())/1000)}s`:`LUNA ${moonFragmentCount}/3`;
+  ctx.strokeText(label,x,y);ctx.fillStyle=fullMoonActive?"#fff0a0":"#fff";ctx.fillText(label,x,y);
+  for(let i=0;i<3;i++){
+    const cx=x+18+i*26,cy=y+24;ctx.fillStyle=i<moonFragmentCount?"#ffe7a0":"#ffffff22";ctx.strokeStyle="#d8c58d";ctx.lineWidth=2;ctx.beginPath();ctx.arc(cx,cy,8,0,Math.PI*2);ctx.fill();ctx.stroke();
+  }
+  ctx.restore();
+}
+function drawClassStatus(){
+  if(!(state==="playing"||state==="quiz")||!selectedClass)return;
+  const info=selectedClass==="bruja"?["BRUJA",!witchShieldUsed]:selectedClass==="fantasma"?["FANTASMA",!ghostShieldUsed]:["VAMPIRO",true];
+  ctx.save();ctx.textAlign="left";ctx.font='900 13px "Courier New",monospace';ctx.lineWidth=3;ctx.strokeStyle="#111";
+  const txt=`CLASE: ${info[0]}${selectedClass!=="vampiro"?(info[1]?"  ✦":"  ✓ USADA"):"  ♥ 2%"}`;
+  ctx.strokeText(txt,18,76);ctx.fillStyle="#f0c579";ctx.fillText(txt,18,76);ctx.restore();
+}
+function drawFullMoonGlow(){
+  if(!fullMoonActive)return;
+  const now=performance.now(),cx=bird.x+bird.w/2,cy=bird.y+bird.h/2;
+  ctx.save();ctx.globalAlpha=.38+.12*Math.sin(now/120);ctx.strokeStyle="#fff2a7";ctx.lineWidth=5;ctx.shadowBlur=18;ctx.shadowColor="#fff4b8";ctx.beginPath();ctx.arc(cx,cy,31,0,Math.PI*2);ctx.stroke();ctx.restore();
+  if(now<fullMoonMessageUntil){
+    const a=Math.min(1,(fullMoonMessageUntil-now)/350);ctx.save();ctx.globalAlpha=a;ctx.textAlign="center";ctx.font='900 34px "Courier New",monospace';ctx.lineWidth=7;ctx.strokeStyle="#4a3710";ctx.strokeText("¡LUNA LLENA!",W/2,120);ctx.fillStyle="#fff0a0";ctx.fillText("¡LUNA LLENA!",W/2,120);ctx.restore();
   }
 }
 function drawJackpotCountdown(){
@@ -1472,201 +1880,109 @@ function drawLives(){
   }
 }
 function drawGround(){
-  const y=H-GROUND_H;pxRect(0,y,W,GROUND_H,"#ded895");pxRect(0,y,W,14,"#6aba43");pxRect(0,y+14,W,8,"#8bd45a");
-  for(let x=-48;x<W+48;x+=48){const xx=x-groundOffset;pxRect(xx,y+26,28,8,"#c5bd72");pxRect(xx+22,y+42,28,8,"#eee8ac");pxRect(xx+8,y+63,22,7,"#c5bd72")}
-  pxRect(0,y,W,4,"#202020");
+  const y=H-GROUND_H;
+  pxRect(0,y,W,GROUND_H,"#241b25");pxRect(0,y,W,13,"#4b3a2d");pxRect(0,y+13,W,7,"#6a4b2d");
+  for(let x=-48;x<W+48;x+=48){
+    const xx=x-groundOffset;pxRect(xx,y+29,27,7,"#33272d");pxRect(xx+20,y+48,25,7,"#17151c");
+    if(((x/48)|0)%3===0){
+      pxRect(xx+9,y+18,8,5,"#a74f29");pxRect(xx+14,y+21,6,4,"#d27a31");
+      // Tiny pumpkins along the ground make the October theme read at a glance.
+      pxRect(xx+25,y+22,13,10,"#d96d2b");pxRect(xx+27,y+20,9,12,"#e98735");pxRect(xx+30,y+16,3,5,"#566f35");
+    }
+  }
+  ctx.strokeStyle="#090a10";ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();
 }
 function bodyColor(){
   const colors={
-    amarillo:"#f3d53c",
-    oceano:"#2f92b8",mandarina:"#f28a2e",menta:"#65c9a5",lavanda:"#9d82d9",
-    cobre:"#b86d3d",petroleo:"#256b73",borgona:"#7f3348",crema:"#ead8ad",
-    cobre_pulido:"#d98a49",medianoche_estelar:"#202846"
+    carbon:"#3a3542",uva:"#704f8e",azul_luna:"#5778a8",calabaza:"#d96d2b",
+    caramelo:"#c9903c",cereza_oscura:"#7a2d43",niebla:"#9ba0ad",bosque:"#3e6b53",
+    negro_terciopelo:"#18141f",fantasma_palido:"#c9c8d4"
   };
-  return colors[equipped.color]||colors.amarillo;
+  return colors[equipped.color]||colors.carbon;
 }
 function drawTrail(x,y){
   if(state!=="playing")return;
   const now=performance.now();
-
-  if(equipped.estela==="polvo_ruta"){
-    for(let i=0;i<7;i++){
-      const xx=x-10-i*9,yy=y+bird.h/2+Math.sin(now/115+i*.8)*5;
-      const size=Math.max(2,6-i*.55);
-      pxRect(xx,yy,size,size,i%2?"#d88a42":"#f2c46d");
-    }
-  }else if(equipped.estela==="estela_cronologica"){
-    for(let i=0;i<6;i++){
-      const xx=x-13-i*12,yy=y+bird.h/2+Math.sin(now/95+i)*5;
-      ctx.save();ctx.translate(xx,yy);ctx.strokeStyle=i%2?"#f0b04a":"#7fd0da";ctx.lineWidth=2;
-      ctx.beginPath();ctx.arc(0,0,5,0,Math.PI*2);ctx.stroke();
-      ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(0,-3);ctx.moveTo(0,0);ctx.lineTo(3,1);ctx.stroke();ctx.restore();
-    }
-  }else if(equipped.estela==="cometa_temporal"){
-    for(let i=0;i<9;i++){
-      const xx=x-10-i*10,yy=y+bird.h/2+Math.sin(now/70+i*.55)*6;
-      const size=Math.max(2,7-i*.45);
-      pxRect(xx,yy,size,size,i<3?"#fff1a3":i<6?"#f1a348":"#7fc4d8");
-    }
-    ctx.fillStyle="#fff8cf";ctx.font='900 11px Arial';ctx.fillText("✦",x-18,y+bird.h/2-5);
+  if(equipped.estela==="hojas_secas"){
+    const cols=["#b8522f","#d17a2e","#7b4930","#d0a14a"];
+    for(let i=0;i<8;i++){const xx=x-8-i*10,yy=y+bird.h/2+Math.sin(now/90+i*.75)*8;pxRect(xx,yy,6,4,cols[i%cols.length]);}
+  }else if(equipped.estela==="rastro_niebla"){
+    ctx.save();ctx.globalAlpha=.25;
+    for(let i=0;i<7;i++){ctx.fillStyle=i%2?"#c2c3d5":"#8f91a8";ctx.beginPath();ctx.arc(x-10-i*13,y+bird.h/2+Math.sin(now/170+i)*7,8+i*.8,0,Math.PI*2);ctx.fill();}
+    ctx.restore();
+  }else if(equipped.estela==="mini_murcielagos"){
+    ctx.save();ctx.strokeStyle="#17131f";ctx.lineWidth=2;
+    for(let i=0;i<6;i++){const xx=x-14-i*15,yy=y+bird.h/2+Math.sin(now/85+i)*9;ctx.beginPath();ctx.moveTo(xx-5,yy);ctx.quadraticCurveTo(xx-2,yy-5,xx,yy);ctx.quadraticCurveTo(xx+2,yy-5,xx+5,yy);ctx.stroke();}
+    ctx.restore();
   }
-
-  if(equipped.efecto==="fenix_temporal"){
-    for(let i=0;i<10;i++){
-      const xx=x-8-i*9,yy=y+bird.h/2+Math.sin(now/48+i*.65)*8;
-      const c=i%3===0?"#fff19a":i%2?"#ff7b2d":"#e23e67";
-      pxRect(xx,yy,Math.max(2,7-i*.45),Math.max(2,7-i*.45),c);
-    }
-  }else if(equipped.efecto==="crononauta_legendario"){
-    for(let i=0;i<7;i++){
-      const xx=x-18-i*12,yy=y+bird.h/2+Math.sin(now/62+i)*8;
-      pxRect(xx,yy,6,6,["#ffd56b","#f08a46","#63c9c1","#8297e8"][i%4]);
-    }
+  if(equipped.efecto==="eclipse_total"){
+    for(let i=0;i<9;i++){const xx=x-10-i*10,yy=y+bird.h/2+Math.sin(now/55+i*.7)*8;pxRect(xx,yy,Math.max(2,6-i*.4),Math.max(2,6-i*.4),i%2?"#a468d6":"#f28a3a");}
+  }else if(equipped.efecto==="senor_octubre"){
+    for(let i=0;i<7;i++){const xx=x-16-i*12,yy=y+bird.h/2+Math.sin(now/70+i)*7;pxRect(xx,yy,5,5,["#f0a34a","#a34f7a","#d76432"][i%3]);}
   }
 }
 function drawBird(){
-  const x=Math.round(bird.x),y=Math.round(bird.y),tilt=state==="playing"?Math.max(-.35,Math.min(.65,bird.vy/12)):0;
+  const x=Math.round(bird.x),y=Math.round(bird.y),tilt=state==="playing"?Math.max(-.28,Math.min(.55,bird.vy/13)):0;
   const now=performance.now(),powered=jackpotActive,mega=powered&&megaJackpotActive,grace=!powered&&(now<jackpotGraceUntil||now<lifeGraceUntil);
-  const premium=["destellos_viaje","portal_temporal","crononauta_legendario","fenix_temporal"].includes(equipped.efecto);
-  const scale=mega?1.32:(powered?1.22:1);
-
+  const premium=["luciernagas","aura_lunar","senor_octubre","eclipse_total"].includes(equipped.efecto);
+  const scale=mega?1.34:(powered?1.22:1);
   drawTrail(x,y);
 
-  // MEGA JACKPOT adds a strong rotating rainbow aura on top of any equipped cosmetic.
+  const cx=x+bird.w/2,cy=y+bird.h/2;
   if(mega){
-    ctx.save();
-    const cx=x+bird.w/2,cy=y+bird.h/2;
-    ctx.lineWidth=5;ctx.globalAlpha=.82;ctx.strokeStyle=rainbowColor(0);
-    ctx.beginPath();ctx.ellipse(cx,cy,43,27,now/420,0,Math.PI*2);ctx.stroke();
-    ctx.globalAlpha=.6;ctx.strokeStyle=rainbowColor(120);
-    ctx.beginPath();ctx.ellipse(cx,cy,51,21,-now/350,0,Math.PI*2);ctx.stroke();
-    for(let i=0;i<10;i++){
-      const a=now/260+i*Math.PI/5;
-      pxRect(cx+Math.cos(a)*48,cy+Math.sin(a)*28,5,5,rainbowColor(i*36));
-    }
+    ctx.save();ctx.lineWidth=5;ctx.globalAlpha=.82;ctx.strokeStyle=rainbowColor(0);ctx.beginPath();ctx.ellipse(cx,cy,44,28,now/420,0,Math.PI*2);ctx.stroke();
+    ctx.globalAlpha=.55;ctx.strokeStyle=rainbowColor(120);ctx.beginPath();ctx.ellipse(cx,cy,52,21,-now/350,0,Math.PI*2);ctx.stroke();ctx.restore();
+  }
+  if(equipped.efecto==="aura_lunar"||equipped.efecto==="senor_octubre"||equipped.efecto==="eclipse_total"){
+    ctx.save();ctx.lineWidth=3;ctx.globalAlpha=.6;
+    ctx.strokeStyle=equipped.efecto==="eclipse_total"?"#bd78e8":equipped.efecto==="senor_octubre"?"#e77c37":"#d9d7f0";
+    ctx.beginPath();ctx.arc(cx,cy,equipped.efecto==="eclipse_total"?37:32,0,Math.PI*2);ctx.stroke();
+    if(equipped.efecto==="eclipse_total"){ctx.strokeStyle="#f19a42";ctx.globalAlpha=.5;ctx.beginPath();ctx.arc(cx,cy,43,0,Math.PI*2);ctx.stroke();}
     ctx.restore();
   }
 
-  // Effects that live outside the rotated bird silhouette.
-  if(equipped.efecto==="portal_temporal"||equipped.efecto==="crononauta_legendario"||equipped.efecto==="fenix_temporal"){
-    ctx.save();
-    const cx=x+bird.w/2,cy=y+bird.h/2;
-    ctx.strokeStyle=equipped.efecto==="fenix_temporal"?"#ff6a2a":equipped.efecto==="crononauta_legendario"?"#ffd56b":"#69c9d0";
-    ctx.lineWidth=3;ctx.globalAlpha=.72;
-    ctx.beginPath();ctx.ellipse(cx,cy,30,19,now/950,0,Math.PI*2);ctx.stroke();
-    ctx.globalAlpha=.42;ctx.beginPath();ctx.ellipse(cx,cy,36,23,-now/1250,0,Math.PI*2);ctx.stroke();
-    if(equipped.efecto==="fenix_temporal"){
-      ctx.strokeStyle="#ef3f67";ctx.globalAlpha=.55;ctx.beginPath();ctx.ellipse(cx,cy,40,16,now/700,0,Math.PI*2);ctx.stroke();
-    }
-    ctx.restore();
-  }
-
-  ctx.save();ctx.translate(x+bird.w/2,y+bird.h/2);ctx.rotate(tilt);ctx.scale(scale,scale);ctx.translate(-bird.w/2,-bird.h/2);
-  if(powered||grace||premium){
-    ctx.shadowBlur=mega?34:(powered?22:premium?16:13);
-    ctx.shadowColor=powered?rainbowColor(180):equipped.efecto==="fenix_temporal"?"#ff6936":equipped.efecto==="portal_temporal"?"#6ed3da":equipped.efecto==="crononauta_legendario"?"#ffbc5c":"#ffe4a0";
-  }
-
+  ctx.save();ctx.translate(cx,cy);ctx.rotate(tilt);ctx.scale(scale,scale);ctx.translate(-bird.w/2,-bird.h/2);
+  if(powered||grace||premium){ctx.shadowBlur=mega?34:(powered?22:14);ctx.shadowColor=powered?rainbowColor(180):equipped.efecto==="eclipse_total"?"#a66be0":equipped.efecto==="senor_octubre"?"#e57a35":"#d7d4ef";}
   const body=powered?rainbowColor(0):bodyColor();
-  let hi=powered?rainbowColor(80):"#f6e55a";
-  let low=powered?rainbowColor(210):"#d8a926";
-  if(!powered&&equipped.color==="cobre_pulido"){hi="#ffd08a";low="#8f4d2b";}
-  if(!powered&&equipped.color==="medianoche_estelar"){hi="#6373ad";low="#11162b";}
+  const wing=powered?rainbowColor(110):(equipped.color==="fantasma_palido"?"#a8a9ba":"#252231");
 
-  pxRect(5,5,24,20,"#222");pxRect(8,2,16,4,"#222");pxRect(8,25,18,4,"#222");
-  pxRect(7,7,20,16,body);pxRect(10,4,12,4,hi);pxRect(8,20,16,5,low);
-
-  // Premium body finishes are visible even without an effect equipped.
-  if(!powered&&equipped.color==="cobre_pulido"){
-    pxRect(10,8,14,3,"#f7b96f");pxRect(9,12,4,5,"#ffd9a2");
-  }else if(!powered&&equipped.color==="medianoche_estelar"){
-    pxRect(11,9,3,3,"#fff1a3");pxRect(20,15,2,2,"#9ed6ff");pxRect(14,20,2,2,"#d5b8ff");
+  // Wings first, so the body stays the focal point.
+  ctx.lineWidth=3;ctx.strokeStyle="#0b0910";ctx.fillStyle=wing;
+  const flap=Math.sin(now/95)*3;
+  ctx.beginPath();ctx.moveTo(10,13);ctx.lineTo(-8,5+flap);ctx.lineTo(-4,18);ctx.lineTo(3,14);ctx.lineTo(7,23);ctx.lineTo(12,17);ctx.closePath();ctx.fill();ctx.stroke();
+  ctx.beginPath();ctx.moveTo(28,13);ctx.lineTo(46,5+flap);ctx.lineTo(42,18);ctx.lineTo(35,14);ctx.lineTo(31,23);ctx.lineTo(26,17);ctx.closePath();ctx.fill();ctx.stroke();
+  if(equipped.alas==="alas_esqueleto"){
+    ctx.strokeStyle="#ded5c1";ctx.lineWidth=2;[[10,13,-6,7],[10,13,-2,17],[28,13,44,7],[28,13,40,17]].forEach(a=>{ctx.beginPath();ctx.moveTo(a[0],a[1]);ctx.lineTo(a[2],a[3]);ctx.stroke();});
+  }else if(equipped.alas==="alas_fantasma"){
+    ctx.save();ctx.globalAlpha=.42;ctx.fillStyle="#d8d5ea";ctx.beginPath();ctx.moveTo(9,12);ctx.lineTo(-12,3);ctx.lineTo(-5,24);ctx.closePath();ctx.fill();ctx.beginPath();ctx.moveTo(29,12);ctx.lineTo(50,3);ctx.lineTo(43,24);ctx.closePath();ctx.fill();ctx.restore();
   }
 
-  // Wings
-  pxRect(0,12,11,11,"#222");
-  if(equipped.alas==="alas_pergamino"){
-    pxRect(-3,10,14,13,"#222");pxRect(-1,12,11,9,"#d8c08a");
-    pxRect(1,14,7,2,"#9b7744");pxRect(1,18,5,2,"#9b7744");
-  }else if(equipped.alas==="alas_mecanicas"){
-    pxRect(-6,9,17,15,"#222");pxRect(-4,11,14,5,"#8a949e");pxRect(-6,18,12,4,"#c1c8cf");
-    pxRect(2,13,3,3,"#f0a33a");
-  }else{
-    pxRect(2,14,9,7,powered?rainbowColor(130):"#f0bf2f");
-  }
+  // Bat body, ears, face.
+  ctx.fillStyle=body;ctx.strokeStyle="#0b0910";ctx.lineWidth=3;ctx.beginPath();ctx.ellipse(19,14,12,12,0,0,Math.PI*2);ctx.fill();ctx.stroke();
+  ctx.fillStyle=body;ctx.beginPath();ctx.moveTo(11,6);ctx.lineTo(10,-3);ctx.lineTo(17,5);ctx.closePath();ctx.fill();ctx.stroke();ctx.beginPath();ctx.moveTo(21,5);ctx.lineTo(28,-3);ctx.lineTo(27,7);ctx.closePath();ctx.fill();ctx.stroke();
+  pxRect(14,10,4,4,"#f7e6be");pxRect(22,10,4,4,"#f7e6be");pxRect(15,11,2,2,"#16111b");pxRect(23,11,2,2,"#16111b");
+  ctx.fillStyle="#f4eee6";ctx.beginPath();ctx.moveTo(17,19);ctx.lineTo(19,24);ctx.lineTo(21,19);ctx.closePath();ctx.fill();
 
-  // Eye / glasses
-  pxRect(23,7,10,10,"#fff");pxRect(29,10,4,4,"#111");
-  if(equipped.gafas==="gafas_aviador"){
-    ctx.fillStyle="#29251f";ctx.beginPath();ctx.ellipse(25,10,5,4,0,0,Math.PI*2);ctx.fill();
-    ctx.beginPath();ctx.ellipse(34,10,5,4,0,0,Math.PI*2);ctx.fill();
-    pxRect(28,9,3,2,"#d9a24d");pxRect(24,8,3,2,"#7bc0d1");pxRect(33,8,3,2,"#7bc0d1");
-  }else if(equipped.gafas==="goggles_expedicion"){
-    pxRect(20,5,19,8,"#3f3428");pxRect(22,7,6,4,"#d6b56b");pxRect(31,7,6,4,"#d6b56b");pxRect(28,8,3,2,"#222");
-  }
+  // Glasses.
+  if(equipped.gafas==="gafas_luna"){ctx.strokeStyle="#d7d2ea";ctx.lineWidth=2;ctx.beginPath();ctx.arc(15.5,11.5,5,0,Math.PI*2);ctx.stroke();ctx.beginPath();ctx.arc(24.5,11.5,5,0,Math.PI*2);ctx.stroke();ctx.beginPath();ctx.moveTo(20,11);ctx.lineTo(21,11);ctx.stroke();}
+  else if(equipped.gafas==="gafas_calabaza"){pxRect(10,7,10,9,"#e57a32");pxRect(21,7,10,9,"#e57a32");pxRect(13,10,4,3,"#16111b");pxRect(24,10,4,3,"#16111b");pxRect(19,10,3,2,"#6b321a");}
 
-  // Beak
-  pxRect(31,15,10,7,"#222");pxRect(33,16,8,5,powered?rainbowColor(300):"#f27d2f");
+  // Hats.
+  if(equipped.sombrero==="gorro_calabaza"){ctx.fillStyle="#e3762f";ctx.strokeStyle="#5b2c18";ctx.lineWidth=2;ctx.beginPath();ctx.arc(19,-2,9,0,Math.PI*2);ctx.fill();ctx.stroke();pxRect(18,-13,3,5,"#527034");}
+  else if(equipped.sombrero==="sombrero_bruja"){ctx.fillStyle="#3b274d";ctx.strokeStyle="#0b0910";ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(7,2);ctx.lineTo(20,-19);ctx.lineTo(31,2);ctx.closePath();ctx.fill();ctx.stroke();pxRect(4,1,30,5,"#271a34");pxRect(10,-1,18,3,"#d16c32");}
+  else if(equipped.sombrero==="corona_hojas"){const cols=["#c4602f","#d4943e","#8b4a31"];for(let i=0;i<5;i++)pxRect(8+i*5,-2-Math.abs(2-i)*2,7,4,cols[i%3]);}
 
-  // Hats
-  if(equipped.sombrero==="panuelo_aventurero"){
-    pxRect(7,0,20,4,"#c94c38");pxRect(4,3,24,4,"#c94c38");pxRect(3,6,7,3,"#8e3429");
-  }else if(equipped.sombrero==="sombrero_explorador"){
-    pxRect(6,-2,23,5,"#8d6b3d");pxRect(10,-8,15,7,"#ad8752");pxRect(9,-3,17,2,"#5d4328");pxRect(3,2,29,3,"#7c5a34");
-  }else if(equipped.sombrero==="casco_cronauta"){
-    pxRect(7,-5,22,8,"#d9e0e4");pxRect(10,-9,16,5,"#aab4bd");pxRect(10,-4,16,4,"#5fb8c3");pxRect(23,-7,4,3,"#ef9b3f");
-  }
+  // Accessories.
+  if(equipped.accesorio==="arana_amiga"){ctx.fillStyle="#161018";ctx.beginPath();ctx.arc(4,5,4,0,Math.PI*2);ctx.fill();ctx.strokeStyle="#161018";ctx.lineWidth=2;for(let i=0;i<4;i++){ctx.beginPath();ctx.moveTo(3,4+i);ctx.lineTo(-2,1+i*2);ctx.stroke();ctx.beginPath();ctx.moveTo(5,4+i);ctx.lineTo(10,1+i*2);ctx.stroke();}}
+  else if(equipped.accesorio==="farolito"){pxRect(31,17,8,11,"#2d2023");pxRect(33,19,4,7,"#f0a33e");ctx.strokeStyle="#2d2023";ctx.beginPath();ctx.arc(35,17,4,Math.PI,0);ctx.stroke();}
+  else if(equipped.accesorio==="luna_creciente"){ctx.fillStyle="#f0dfac";ctx.beginPath();ctx.arc(34,4,6,0,Math.PI*2);ctx.fill();ctx.fillStyle="#211a31";ctx.beginPath();ctx.arc(37,2,6,0,Math.PI*2);ctx.fill();}
 
-  // Accessories
-  if(equipped.accesorio==="brujula"){
-    ctx.save();ctx.strokeStyle="#d7a84d";ctx.fillStyle="#f2d484";ctx.lineWidth=2;
-    ctx.beginPath();ctx.arc(7,8,6,0,Math.PI*2);ctx.fill();ctx.stroke();
-    ctx.strokeStyle="#793f2f";ctx.beginPath();ctx.moveTo(7,4);ctx.lineTo(9,10);ctx.stroke();ctx.restore();
-  }else if(equipped.accesorio==="reloj_bolsillo"){
-    ctx.save();ctx.fillStyle="#dfb14c";ctx.strokeStyle="#71471f";ctx.lineWidth=2;
-    ctx.beginPath();ctx.arc(7,8,6,0,Math.PI*2);ctx.fill();ctx.stroke();
-    ctx.beginPath();ctx.moveTo(7,2);ctx.quadraticCurveTo(2,-2,4,-6);ctx.stroke();
-    ctx.strokeStyle="#71471f";ctx.beginPath();ctx.moveTo(7,8);ctx.lineTo(7,4);ctx.moveTo(7,8);ctx.lineTo(10,9);ctx.stroke();ctx.restore();
-  }else if(equipped.accesorio==="anillos_tiempo"){
-    ctx.save();ctx.translate(9,9);ctx.strokeStyle="#f6ca62";ctx.lineWidth=2;
-    ctx.beginPath();ctx.ellipse(0,0,9,4,now/500,0,Math.PI*2);ctx.stroke();
-    ctx.strokeStyle="#65c4cf";ctx.beginPath();ctx.ellipse(0,0,9,4,-now/700,0,Math.PI*2);ctx.stroke();ctx.restore();
-  }
-
-  if(powered){
-    const sx=7+((now/9)%20);pxRect(sx,7,4,15,"#fff");
-  }
-  if(equipped.efecto==="destellos_viaje"){
-    for(let i=0;i<3;i++){
-      const a=now/520+i*2.1;pxRect(18+Math.cos(a)*20,14+Math.sin(a)*15,3,3,i%2?"#fff0a6":"#f3a14b");
-    }
-  }else if(equipped.efecto==="portal_temporal"){
-    ctx.globalAlpha=.28;pxRect(7,7,20,16,"#6bcad0");ctx.globalAlpha=1;
-  }else if(equipped.efecto==="fenix_temporal"){
-    ctx.globalAlpha=.30;pxRect(5,5,24,20,"#ff632f");ctx.globalAlpha=1;
-    for(let i=0;i<6;i++){
-      const a=now/300+i*Math.PI/3;
-      pxRect(18+Math.cos(a)*24,14+Math.sin(a)*18,4,4,i%2?"#fff08c":"#ef3f67");
-    }
-  }else if(equipped.efecto==="crononauta_legendario"){
-    ctx.globalAlpha=.30;pxRect(5,5,24,20,"#f2a548");ctx.globalAlpha=1;
-    for(let i=0;i<5;i++){
-      const a=now/380+i*Math.PI*2/5;
-      pxRect(18+Math.cos(a)*23,14+Math.sin(a)*18,3,3,i%2?"#fff0a0":"#73d0d2");
-    }
-  }
+  if(equipped.efecto==="luciernagas"){for(let i=0;i<5;i++){const a=now/420+i*1.25;pxRect(19+Math.cos(a)*26,13+Math.sin(a)*18,3,3,i%2?"#ffe47a":"#d7ff8f");}}
+  else if(equipped.efecto==="senor_octubre"){for(let i=0;i<6;i++){const a=now/360+i*Math.PI/3;pxRect(19+Math.cos(a)*28,13+Math.sin(a)*20,4,4,i%2?"#ec8a3a":"#a85a86");}}
+  else if(equipped.efecto==="eclipse_total"){ctx.globalAlpha=.26;ctx.fillStyle="#a462d4";ctx.beginPath();ctx.arc(19,14,18,0,Math.PI*2);ctx.fill();ctx.globalAlpha=1;for(let i=0;i<7;i++){const a=now/280+i*Math.PI*2/7;pxRect(19+Math.cos(a)*30,13+Math.sin(a)*22,4,4,i%2?"#f39b3f":"#b66de1");}}
   ctx.restore();
 
-  if((powered||grace)&&now-jackpotImpactFlash<120){
-    ctx.save();ctx.strokeStyle="#fff8a8";ctx.lineWidth=4;
-    const cx=x+bird.w/2,cy=y+bird.h/2;
-    for(let i=0;i<6;i++){
-      const a=i*Math.PI/3,len=24;ctx.beginPath();
-      ctx.moveTo(cx+Math.cos(a)*17,cy+Math.sin(a)*17);
-      ctx.lineTo(cx+Math.cos(a)*len,cy+Math.sin(a)*len);ctx.stroke();
-    }
-    ctx.restore();
-  }
+  if((powered||grace)&&now-jackpotImpactFlash<120){ctx.save();ctx.strokeStyle="#fff1a8";ctx.lineWidth=4;for(let i=0;i<6;i++){const a=i*Math.PI/3;ctx.beginPath();ctx.moveTo(cx+Math.cos(a)*17,cy+Math.sin(a)*17);ctx.lineTo(cx+Math.cos(a)*25,cy+Math.sin(a)*25);ctx.stroke();}ctx.restore();}
 }
 function drawScore(){
   ctx.textAlign="center";ctx.font='bold 42px "Courier New",monospace';ctx.lineWidth=7;ctx.strokeStyle="#222";
@@ -1681,18 +1997,19 @@ function drawScore(){
   }
 }
 function panel(title,lines,footer){
-  const boxW=570,boxH=220,x=(W-boxW)/2,y=150;
-  pxRect(x+8,y+8,boxW,boxH,"#0005");pxRect(x,y,boxW,boxH,"#fff7d6");
-  ctx.strokeStyle="#222";ctx.lineWidth=6;ctx.strokeRect(x,y,boxW,boxH);
-  ctx.textAlign="center";ctx.fillStyle="#246b22";ctx.font='bold 38px "Courier New",monospace';ctx.fillText(title,W/2,y+52);
-  ctx.fillStyle="#222";ctx.font='bold 20px "Courier New",monospace';
+  const boxW=600,boxH=220,x=(W-boxW)/2,y=150;
+  pxRect(x+8,y+8,boxW,boxH,"#0008");pxRect(x,y,boxW,boxH,"#211a31");
+  ctx.strokeStyle="#0a0810";ctx.lineWidth=6;ctx.strokeRect(x,y,boxW,boxH);
+  pxRect(x+10,y+10,boxW-20,4,"#d87634");
+  ctx.textAlign="center";ctx.fillStyle="#e88941";ctx.font='bold 38px "Courier New",monospace';ctx.fillText(title,W/2,y+52);
+  ctx.fillStyle="#fff1d6";ctx.font='bold 19px "Courier New",monospace';
   let yy=y+95;for(const line of lines){ctx.fillText(line,W/2,yy);yy+=31}
-  ctx.fillStyle="#555";ctx.font='bold 16px "Courier New",monospace';ctx.fillText(footer,W/2,y+boxH-20);
+  ctx.fillStyle="#bdb2c9";ctx.font='bold 16px "Courier New",monospace';ctx.fillText(footer,W/2,y+boxH-20);
 }
 function draw(){
-  drawSky();for(const p of pipes)drawPipe(p);drawCoins();drawHeartPickups();drawGround();drawBird();drawScore();drawLives();drawJackpotCountdown();
-  if(state==="ready")panel("FLAPPY VERB",["PRETÉRITO","Vuela. Pasa. Elige."],"ESPACIO / CLIC para empezar");
-  if(state==="gameover")panel("FIN DEL JUEGO",[`PUNTUACIÓN: ${score}`,`TOTAL: ${Math.min(cumulative,CUMULATIVE_TARGET)} / ${CUMULATIVE_TARGET}`,eliteEarned?`MEJOR: ${best} · ELITE ✓`:`MEJOR: ${best} / ${ELITE_TARGET}`],"Elige JUGAR o PERSONALIZAR AVE");
+  drawSky();for(const p of pipes)drawPipe(p);drawCoins();drawHeartPickups();drawMoonFragments();drawGround();drawBird();drawFullMoonGlow();drawScore();drawLives();drawMoonMeter();drawClassStatus();drawJackpotCountdown();
+  if(state==="ready")panel("FLAPPY VERB",["CONDICIONAL · NOCHE DE OCTUBRE","Vuela. Pasa. Elige."],"ESPACIO / CLIC para empezar");
+  if(state==="gameover")panel("FIN DEL JUEGO",[`PUNTUACIÓN: ${score}`,`TOTAL: ${Math.min(cumulative,CUMULATIVE_TARGET)} / ${CUMULATIVE_TARGET}`,eliteEarned?`MEJOR: ${best} · ELITE ✓`:`MEJOR: ${best} / ${ELITE_TARGET}`],"Elige JUGAR o PERSONALIZAR MURCIÉLAGO");
 }
 
 function loop(now){
@@ -1703,6 +2020,10 @@ function loop(now){
 // INPUT
 // ------------------------------------------------------------
 document.addEventListener("keydown",e=>{
+  if(classOverlay.style.display==="flex"){
+    if(["1","2","3"].includes(e.key)){e.preventDefault();startRunWithClass(["bruja","fantasma","vampiro"][Number(e.key)-1]);}
+    return;
+  }
   if(menuOverlay.style.display==="flex"||customizeOverlay.style.display==="flex")return;
   if(state==="quiz"){
     if(["1","2","3"].includes(e.key)){e.preventDefault();submitChoice(Number(e.key)-1)}
@@ -1714,21 +2035,21 @@ document.addEventListener("keydown",e=>{
   }else if(e.key==="Enter"&&state==="gameover"){returnToMenuFromGameOver()}
 });
 canvas.addEventListener("pointerdown",()=>{
-  if(menuOverlay.style.display==="flex"||customizeOverlay.style.display==="flex")return;
+  if(menuOverlay.style.display==="flex"||customizeOverlay.style.display==="flex"||classOverlay.style.display==="flex")return;
   if(state==="quiz")return;
   if(state==="gameover"){returnToMenuFromGameOver()}else flap();
 });
 overlay.addEventListener("pointerdown",e=>e.stopPropagation());
 
 
-document.getElementById("playBtn").addEventListener("click",()=>{
-  hideMainMenu();resetGame();flap();
-});
+document.getElementById("playBtn").addEventListener("click",()=>{showClassSelect();});
+document.querySelectorAll(".classChoice").forEach(btn=>btn.addEventListener("click",()=>startRunWithClass(btn.dataset.class)));
 document.getElementById("customizeBtn").addEventListener("click",()=>{
-  buildCustomizer();menuOverlay.style.display="none";customizeOverlay.style.display="flex";
+  sfxUiClick();buildCustomizer();menuOverlay.style.display="none";customizeOverlay.style.display="flex";
+  if(audioUnlocked&&musicEnabled)switchMusic("menu",260);
 });
 document.getElementById("backBtn").addEventListener("click",()=>{
-  customizeOverlay.style.display="none";showMainMenu();
+  sfxUiClick();customizeOverlay.style.display="none";showMainMenu();
 });
 
 // Save again whenever the tab/app is backgrounded or closed.
@@ -1742,10 +2063,10 @@ showMainMenu();
 
 // Downloaded file:// copies do not have reliable shared localStorage across filenames/paths.
 if(location.protocol==="file:"){
-  console.warn("Flappy Verb: progreso local no confiable en archivos descargados. Usa la URL HTTPS publicada para guardado estable.");
+  console.warn("Flappy Verb Condicional: progreso local no confiable en archivos descargados. Usa la URL HTTPS publicada para guardado estable.");
 }
 if(!storageOkay){
-  console.warn("Flappy Verb: este navegador o política escolar no permite localStorage persistente.");
+  console.warn("Flappy Verb Condicional: este navegador o política escolar no permite localStorage persistente.");
 }
 
 requestAnimationFrame(loop);
